@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, Sparkles, AlertTriangle, CheckCircle2 } from 'lucide-react';
+import { Heart, Sparkles, AlertTriangle, CheckCircle2, ArrowRight } from 'lucide-react';
 import { soundEngine } from '../utils/audio';
 import { StarEasterEgg } from './StarEasterEgg';
 
@@ -155,14 +155,14 @@ export const LoveProtocolQuiz: React.FC<LoveProtocolQuizProps> = ({ onQuizComple
         setIsTyping(false);
         clearInterval(interval);
       }
-    }, 28);
+    }, 25);
 
     return () => clearInterval(interval);
   }, [currentIndex, currentQ]);
 
   const handleAnswerSelect = (
     optionLetter: 'A' | 'B',
-    optionText: string,
+    _optionText: string,
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -188,7 +188,7 @@ export const LoveProtocolQuiz: React.FC<LoveProtocolQuizProps> = ({ onQuizComple
         setActiveErrorModal(null);
         soundEngine.playHeartPop();
         advanceNext();
-      }, 2500);
+      }, 2400);
       return;
     }
 
@@ -206,9 +206,9 @@ export const LoveProtocolQuiz: React.FC<LoveProtocolQuizProps> = ({ onQuizComple
   };
 
   return (
-    <div className="min-h-[85vh] w-full flex items-center justify-center p-4 sm:p-6 relative z-10">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center p-4 sm:p-6 relative z-10 my-auto">
       <StarEasterEgg message="You're my favorite notification ❤️" top="15%" left="12%" />
-      <StarEasterEgg message="Made with love ❤️" bottom="18%" right="12%" />
+      <StarEasterEgg message="Handcrafted with love ❤️" bottom="18%" right="12%" />
 
       {heartBurst.map((h) => (
         <motion.div
@@ -226,28 +226,27 @@ export const LoveProtocolQuiz: React.FC<LoveProtocolQuizProps> = ({ onQuizComple
         </motion.div>
       ))}
 
-      {/* Main Glass Apple Card */}
+      {/* Main Glass Card */}
       <div className="w-full max-w-2xl glass-card-apple rounded-[36px] p-6 sm:p-10 border border-white/20 shadow-[0_20px_80px_rgba(236,72,153,0.25)] relative overflow-hidden">
-        {/* Progress Bar Header */}
-        <div className="mb-8 space-y-2.5">
-          <div className="flex justify-between items-center text-xs font-code text-pink-200">
-            <span className="flex items-center gap-1.5 font-medium">
-              <Sparkles className="w-3.5 h-3.5 text-pink-300" />
-              Love Protocol Step {currentIndex + 1} of {QUESTIONS.length}
-            </span>
-            <span className="text-pink-300 font-bold">
-              {Math.round(((currentIndex + 1) / QUESTIONS.length) * 100)}%
-            </span>
-          </div>
+        {/* Header Ribbon */}
+        <div className="mb-6 flex justify-between items-center text-xs font-code text-pink-200">
+          <span className="flex items-center gap-1.5 font-semibold">
+            <Sparkles className="w-4 h-4 text-pink-300" />
+            PAGE 11 // LOVE_PROTOCOL_QUIZ ({currentIndex + 1}/{QUESTIONS.length})
+          </span>
+          <span className="text-pink-300 font-bold">
+            {Math.round(((currentIndex + 1) / QUESTIONS.length) * 100)}%
+          </span>
+        </div>
 
-          <div className="w-full h-2.5 bg-black/25 rounded-full overflow-hidden p-0.5 border border-white/15">
-            <motion.div
-              className="h-full bg-gradient-to-r from-pink-400 via-rose-300 to-purple-400 rounded-full shadow-[0_0_12px_rgba(248,200,220,0.8)]"
-              initial={{ width: 0 }}
-              animate={{ width: `${((currentIndex + 1) / QUESTIONS.length) * 100}%` }}
-              transition={{ duration: 0.4 }}
-            />
-          </div>
+        {/* Progress Bar */}
+        <div className="w-full h-2.5 bg-black/25 rounded-full overflow-hidden p-0.5 border border-white/15 mb-8">
+          <motion.div
+            className="h-full bg-gradient-to-r from-pink-400 via-rose-300 to-purple-400 rounded-full shadow-[0_0_12px_rgba(248,200,220,0.8)]"
+            initial={{ width: 0 }}
+            animate={{ width: `${((currentIndex + 1) / QUESTIONS.length) * 100}%` }}
+            transition={{ duration: 0.4 }}
+          />
         </div>
 
         {/* Question Text */}
@@ -258,9 +257,9 @@ export const LoveProtocolQuiz: React.FC<LoveProtocolQuizProps> = ({ onQuizComple
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.35 }}
-            className="min-h-[160px] flex flex-col justify-center mb-8 text-center"
+            className="min-h-[140px] flex flex-col justify-center mb-8 text-center"
           >
-            <div className="inline-flex items-center justify-center gap-2 text-xs font-code text-pink-300/80 mb-3 uppercase tracking-wider">
+            <div className="inline-flex items-center justify-center gap-2 text-xs font-code text-pink-300/80 mb-3 uppercase tracking-wider font-bold">
               <span>QUESTION #{currentQ.id}</span>
             </div>
 
@@ -296,9 +295,9 @@ export const LoveProtocolQuiz: React.FC<LoveProtocolQuizProps> = ({ onQuizComple
           </motion.button>
         </div>
 
-        {/* Subtle Note */}
-        <div className="mt-8 text-center text-xs font-code text-pink-200/60 flex items-center justify-center gap-1.5">
-          <Heart className="w-3 h-3 text-rose-400 fill-rose-400" />
+        {/* Footer Note */}
+        <div className="mt-8 text-center text-xs font-code text-pink-200/70 flex items-center justify-center gap-1.5">
+          <Heart className="w-3.5 h-3.5 text-rose-400 fill-rose-400" />
           <span>All paths lead straight to love</span>
         </div>
       </div>

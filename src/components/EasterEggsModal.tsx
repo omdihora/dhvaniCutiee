@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Terminal, Heart, X, Code2 } from 'lucide-react';
+import { Sparkles, Terminal, Heart, X, Code2, Star } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { soundEngine } from '../utils/audio';
 
@@ -13,6 +13,7 @@ export const EasterEggsModal: React.FC<EasterEggsModalProps> = ({ isOpenHint, on
   const [typedKeys, setTypedKeys] = useState<string>('');
   const [konamiProgress, setKonamiProgress] = useState<number>(0);
   const [activeTrigger, setActiveTrigger] = useState<'DHVANI' | 'KONAMI' | null>(null);
+  const [heartRainDrops, setHeartRainDrops] = useState<{ id: number; x: number; delay: number; size: number }[]>([]);
 
   const konamiSequence = [
     'ArrowUp', 'ArrowUp',
@@ -63,13 +64,24 @@ export const EasterEggsModal: React.FC<EasterEggsModalProps> = ({ isOpenHint, on
     soundEngine.playCelebration();
     setActiveTrigger('DHVANI');
 
-    // Confetti rain of hearts
+    // Massive confetti
     confetti({
-      particleCount: 150,
-      spread: 100,
+      particleCount: 200,
+      spread: 120,
       origin: { y: 0.5 },
-      colors: ['#ec4899', '#f43f5e', '#a855f7'],
+      colors: ['#ec4899', '#f43f5e', '#a855f7', '#fbbf24', '#ffffff'],
     });
+
+    // Spawn floating heart particles across the screen
+    const drops = Array.from({ length: 40 }).map((_, i) => ({
+      id: Date.now() + i,
+      x: Math.random() * 100,
+      delay: Math.random() * 2,
+      size: Math.random() * 20 + 14,
+    }));
+    setHeartRainDrops(drops);
+
+    setTimeout(() => setHeartRainDrops([]), 5000);
   };
 
   const triggerKonamiSecret = () => {
@@ -82,10 +94,42 @@ export const EasterEggsModal: React.FC<EasterEggsModalProps> = ({ isOpenHint, on
       origin: { y: 0.3 },
       colors: ['#22c55e', '#ec4899', '#3b82f6', '#fbbf24'],
     });
+
+    // Heart rain effect
+    const drops = Array.from({ length: 50 }).map((_, i) => ({
+      id: Date.now() + i,
+      x: Math.random() * 100,
+      delay: Math.random() * 3,
+      size: Math.random() * 24 + 12,
+    }));
+    setHeartRainDrops(drops);
+
+    setTimeout(() => setHeartRainDrops([]), 6000);
   };
 
   return (
     <>
+      {/* Heart Rain Overlay */}
+      {heartRainDrops.length > 0 && (
+        <div className="fixed inset-0 z-[55] pointer-events-none overflow-hidden">
+          {heartRainDrops.map((drop) => (
+            <div
+              key={drop.id}
+              className="absolute heart-rain-particle"
+              style={{
+                left: `${drop.x}%`,
+                top: '-20px',
+                fontSize: `${drop.size}px`,
+                animationDelay: `${drop.delay}s`,
+                animationDuration: `${2 + Math.random() * 2}s`,
+              }}
+            >
+              ❤️
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* 1. Interactive Trigger Modals */}
       <AnimatePresence>
         {activeTrigger && (
@@ -121,7 +165,10 @@ export const EasterEggsModal: React.FC<EasterEggsModalProps> = ({ isOpenHint, on
                       Secret Unlocked ❤️
                     </h3>
                     <p className="text-xl text-pink-200 font-medium">
-                      You're my favorite person in the entire world.
+                      You're My Favorite Person
+                    </p>
+                    <p className="text-base text-pink-100/70 font-light mt-2">
+                      Every time you type my name, my heart skips a beat. Even digitally. ❤️
                     </p>
                   </div>
 
@@ -137,16 +184,17 @@ export const EasterEggsModal: React.FC<EasterEggsModalProps> = ({ isOpenHint, on
 
                   <div className="space-y-2">
                     <h3 className="text-3xl font-extrabold text-emerald-400 font-code tracking-wide">
-                      Developer Mode Activated ❤️
+                      Developer Mode ❤️
                     </h3>
                     <p className="text-lg text-slate-100 font-medium">
-                      Unlimited Love & Debugging Mode Granted for Dhvani!
+                      Unlimited Love & Debugging Mode Granted!
                     </p>
                   </div>
 
                   <div className="p-3 bg-black/40 rounded-xl text-left text-xs font-code text-emerald-300 space-y-1">
                     <div>$ system.setLoveLevel(INFINITY);</div>
                     <div>$ system.setDisagreements(0);</div>
+                    <div>$ heartRain.activate() // ❤️ raining across screen</div>
                     <div>$ status: "PERFECT_MATCH";</div>
                   </div>
 
@@ -174,7 +222,7 @@ export const EasterEggsModal: React.FC<EasterEggsModalProps> = ({ isOpenHint, on
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="glass-card bg-[#14061d]/95 border border-pink-500/40 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-[0_0_60px_rgba(236,72,153,0.3)] space-y-6 relative"
+              className="glass-card bg-[#14061d]/95 border border-pink-500/40 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-[0_0_60px_rgba(236,72,153,0.3)] space-y-5 relative"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between border-b border-pink-500/20 pb-4">
@@ -190,8 +238,8 @@ export const EasterEggsModal: React.FC<EasterEggsModalProps> = ({ isOpenHint, on
                 </button>
               </div>
 
-              <div className="space-y-4 text-sm text-slate-200">
-                <div className="p-3.5 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-start gap-3">
+              <div className="space-y-3 text-sm text-slate-200">
+                <div className="p-3 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-start gap-3">
                   <Heart className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
                   <div>
                     <div className="font-semibold text-pink-200">Secret Word</div>
@@ -201,7 +249,7 @@ export const EasterEggsModal: React.FC<EasterEggsModalProps> = ({ isOpenHint, on
                   </div>
                 </div>
 
-                <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-start gap-3">
+                <div className="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-start gap-3">
                   <Code2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
                   <div>
                     <div className="font-semibold text-emerald-200">Konami Code</div>
@@ -211,19 +259,29 @@ export const EasterEggsModal: React.FC<EasterEggsModalProps> = ({ isOpenHint, on
                   </div>
                 </div>
 
-                <div className="p-3.5 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-start gap-3">
-                  <Sparkles className="w-5 h-5 text-purple-400 shrink-0 mt-0.5" />
+                <div className="p-3 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-start gap-3">
+                  <Star className="w-5 h-5 text-purple-400 shrink-0 mt-0.5" />
                   <div>
                     <div className="font-semibold text-purple-200">Hovering Stars</div>
                     <div className="text-xs text-slate-300">
-                      Hover over any glowing sparkling stars floating around screens to discover sweet messages!
+                      Hover over glowing stars to discover sweet messages!
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-start gap-3">
+                  <Heart className="w-4 h-4 text-rose-400 fill-rose-400 shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-rose-200">Hidden Heart</div>
+                    <div className="text-xs text-slate-300">
+                      A tiny glowing heart is hidden somewhere on the page... can you find it? 💕
                     </div>
                   </div>
                 </div>
               </div>
 
               <div className="pt-2 text-center text-xs font-code text-pink-300/60">
-                RelationshipOS Kernel v1.0 // Made for Dhvani
+                RelationshipOS v2.0 // Made for Dhvani
               </div>
             </motion.div>
           </motion.div>

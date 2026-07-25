@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, Sparkles, Moon, Flower2 } from 'lucide-react';
+import { Heart, Sparkles, Moon, Flower2, ArrowRight } from 'lucide-react';
 import { soundEngine } from '../utils/audio';
 
 interface NightSkyLetterProps {
@@ -9,11 +9,11 @@ interface NightSkyLetterProps {
 
 const LETTER_PARAGRAPHS = [
   "Dear Dhvani ❤️,",
-  "People usually give flowers. Some write letters. Some buy gifts. But I wanted to give you something only an IT guy could. So instead of buying something... I built something.",
-  "Every animation. Every button. Every transition. Every tiny detail... was created while thinking about you.",
-  "This website isn't just code. It's hundreds of little thoughts stitched together with love.",
+  "People usually give flowers. Some write letters. Some buy gifts. But I wanted to give you something only a dedicated developer could. So instead of just buying something... I built this whole digital world for you.",
+  "Every animation. Every button. Every transition. Every tiny detail... was handcrafted while thinking about you.",
+  "This website isn't just code. It's hundreds of little thoughts stitched together with pure love.",
   "Whenever life gets difficult, remember this... there will always be one developer whose favorite project will never be an app, a website, or a program... it will always be you.",
-  "Thank you for making ordinary days feel extraordinary. I don't promise a perfect life. There will always be bugs. There will always be unexpected errors. But I promise... we'll debug everything together.",
+  "Thank you for making ordinary days feel extraordinary. I don't promise a perfect life without bugs or errors. But I promise... we'll debug everything together.",
   "Thank you for existing. Thank you for being you.",
   "With all my heart... ❤️ Om."
 ];
@@ -37,12 +37,12 @@ export const NightSkyLetter: React.FC<NightSkyLetterProps> = ({ onOneLastClick }
           if (isCancelled) return;
           setCurrentLineText(targetParagraph.slice(0, charIdx));
           if (charIdx % 4 === 0) soundEngine.playClick();
-          await new Promise((r) => setTimeout(r, 26));
+          await new Promise((r) => setTimeout(r, 22));
         }
 
         setTypedTexts((prev) => [...prev, targetParagraph]);
         setCurrentLineText('');
-        await new Promise((r) => setTimeout(r, 420));
+        await new Promise((r) => setTimeout(r, 350));
       }
 
       setIsFinishedTyping(true);
@@ -57,12 +57,13 @@ export const NightSkyLetter: React.FC<NightSkyLetterProps> = ({ onOneLastClick }
   }, []);
 
   const handleClickFinal = () => {
+    soundEngine.playPageSwitch();
     soundEngine.playHeartPop();
     onOneLastClick();
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center p-4 sm:p-8 relative z-10 my-8">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center p-4 sm:p-8 relative z-10 my-auto">
       {/* Soft Moonlight Glow */}
       <div className="absolute top-10 right-10 sm:right-24 w-52 h-52 sm:w-72 sm:h-72 rounded-full bg-amber-100/15 blur-[90px] pointer-events-none" />
 
@@ -92,7 +93,7 @@ export const NightSkyLetter: React.FC<NightSkyLetterProps> = ({ onOneLastClick }
 
       {/* Drifting Petals */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {Array.from({ length: 14 }).map((_, idx) => (
+        {Array.from({ length: 12 }).map((_, idx) => (
           <div
             key={`petal-${idx}`}
             className="absolute text-rose-300/70 text-lg animate-float-slow"
@@ -108,7 +109,7 @@ export const NightSkyLetter: React.FC<NightSkyLetterProps> = ({ onOneLastClick }
         ))}
       </div>
 
-      {/* Main Glass Apple Letter Card */}
+      {/* Main Glass Letter Card */}
       <motion.div
         initial={{ opacity: 0, y: 30, scale: 0.96 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -119,7 +120,7 @@ export const NightSkyLetter: React.FC<NightSkyLetterProps> = ({ onOneLastClick }
         <div className="flex items-center justify-between border-b border-pink-300/20 pb-4 mb-6 text-xs font-code text-pink-200">
           <div className="flex items-center gap-2">
             <Heart className="w-4 h-4 text-rose-400 fill-rose-400" />
-            <span>LETTER_TO_DHVANI.TXT</span>
+            <span>PAGE 12 // LETTER_TO_DHVANI.TXT</span>
           </div>
           <div className="text-amber-200/90 flex items-center gap-1 font-serif italic text-sm">
             <span>For My Favorite Person</span>
@@ -127,7 +128,7 @@ export const NightSkyLetter: React.FC<NightSkyLetterProps> = ({ onOneLastClick }
         </div>
 
         {/* Typed Paragraphs */}
-        <div className="space-y-4 text-slate-100/95 leading-relaxed font-sans text-base sm:text-lg min-h-[380px]">
+        <div className="space-y-4 text-slate-100/95 leading-relaxed font-sans text-base sm:text-lg min-h-[360px]">
           {typedTexts.map((paragraph, index) => {
             const isSalutation = index === 0;
             const isSignature = paragraph.includes('With all my heart');
@@ -180,7 +181,8 @@ export const NightSkyLetter: React.FC<NightSkyLetterProps> = ({ onOneLastClick }
               <span className="absolute inset-0 bg-gradient-to-r from-rose-400 via-pink-300 to-amber-300 rounded-full animate-pulse-glow" />
               <span className="relative px-9 py-4 rounded-full bg-[#1b0a29] text-white flex items-center gap-3 transition-all duration-300 group-hover:bg-transparent">
                 <Sparkles className="w-5 h-5 text-amber-300 animate-spin" style={{ animationDuration: '6s' }} />
-                <span>One Last Click ❤️</span>
+                <span>Enter Grand Finale</span>
+                <ArrowRight className="w-5 h-5 text-pink-300" />
               </span>
             </button>
           </motion.div>

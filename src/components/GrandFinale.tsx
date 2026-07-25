@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { Heart, ShieldCheck, Lock, Sparkles, RefreshCw, Code } from 'lucide-react';
+import { Heart, ShieldCheck, Lock, Sparkles, RefreshCw, Code, ArrowLeft } from 'lucide-react';
 import { soundEngine } from '../utils/audio';
 import { StarEasterEgg } from './StarEasterEgg';
 
@@ -13,9 +13,9 @@ export const GrandFinale: React.FC<GrandFinaleProps> = ({ onRestart }) => {
   useEffect(() => {
     soundEngine.playCelebration();
 
-    const count = 220;
+    const count = 240;
     const defaults = {
-      origin: { y: 0.7 },
+      origin: { y: 0.65 },
       colors: ['#fadadd', '#f8c8dc', '#ec4899', '#f43f5e', '#a855f7', '#fbbf24', '#ffffff'],
     };
 
@@ -35,58 +35,67 @@ export const GrandFinale: React.FC<GrandFinaleProps> = ({ onRestart }) => {
 
     const interval = setInterval(() => {
       confetti({
-        particleCount: 14,
+        particleCount: 16,
         angle: 60,
         spread: 55,
         origin: { x: 0 },
         colors: ['#fadadd', '#f8c8dc', '#c084fc'],
       });
       confetti({
-        particleCount: 14,
+        particleCount: 16,
         angle: 120,
         spread: 55,
         origin: { x: 1 },
         colors: ['#fadadd', '#f8c8dc', '#c084fc'],
       });
-    }, 2400);
+    }, 2200);
 
     return () => clearInterval(interval);
   }, []);
 
+  const handleReplay = () => {
+    soundEngine.playPageSwitch();
+    onRestart();
+  };
+
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 1 }}
-      className="min-h-screen w-full flex flex-col items-center justify-center p-4 sm:p-8 relative z-10 text-center py-16"
-    >
+    <div className="min-h-screen w-full flex flex-col items-center justify-center p-4 sm:p-8 relative z-10 text-center py-12 my-auto">
       {/* Floating Easter Egg Stars */}
       <StarEasterEgg message="You're my favorite person in the universe ❤️" top="15%" left="10%" />
       <StarEasterEgg message="Forever & Always ❤️" top="20%" right="12%" />
-      <StarEasterEgg message="Made with love by Om ❤️" bottom="25%" left="14%" />
-      <StarEasterEgg message="No Disconnect Button Found ❤️" bottom="28%" right="15%" />
+      <StarEasterEgg message="Handcrafted with love by Om ❤️" bottom="22%" left="14%" />
+      <StarEasterEgg message="No Disconnect Button Found ❤️" bottom="24%" right="15%" />
 
       {/* Giant Pulsing Heart in Center */}
-      <div className="relative mb-8 flex items-center justify-center">
+      <div className="relative mb-6 flex items-center justify-center">
         <div className="absolute w-80 h-80 bg-pink-400/25 rounded-full blur-[100px] animate-pulse" />
         <div className="absolute w-52 h-52 bg-rose-400/35 rounded-full blur-2xl animate-ping opacity-30" />
 
         <motion.div
           animate={{ scale: [1, 1.18, 1, 1.14, 1] }}
           transition={{ repeat: Infinity, duration: 1.6, ease: 'easeInOut' }}
-          className="relative text-rose-400 text-8xl sm:text-9xl drop-shadow-[0_0_50px_rgba(244,63,94,0.8)] cursor-pointer"
+          className="relative text-8xl sm:text-9xl drop-shadow-[0_0_50px_rgba(244,63,94,0.8)] cursor-pointer"
           onClick={() => {
             soundEngine.playHeartPop();
-            confetti({ particleCount: 35, spread: 75 });
+            confetti({ particleCount: 45, spread: 85 });
           }}
         >
           ❤️
         </motion.div>
       </div>
 
-      {/* Main Apple Glass Card */}
+      {/* Main Glass Card */}
       <div className="w-full max-w-xl glass-card-apple rounded-[36px] p-8 sm:p-10 border border-white/20 shadow-[0_20px_90px_rgba(236,72,153,0.3)] space-y-6">
         <div className="space-y-2.5">
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full ribbon-badge text-pink-100 text-xs font-code mb-2"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+            <span>PAGE 13 // GRAND_FINALE</span>
+          </motion.div>
+
           <motion.h2
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -125,42 +134,39 @@ export const GrandFinale: React.FC<GrandFinaleProps> = ({ onRestart }) => {
           </span>
         </motion.div>
 
-        {/* Buttons */}
+        {/* Action Buttons */}
         <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
           <button
             onClick={() => {
               soundEngine.playHeartPop();
-              confetti({ particleCount: 65, spread: 95 });
+              confetti({ particleCount: 75, spread: 100 });
             }}
             className="w-full sm:w-auto glass-button-romantic py-3.5 px-7 rounded-full text-white text-sm font-medium flex items-center justify-center gap-2 border border-white/20"
           >
             <Sparkles className="w-4 h-4 text-amber-300" />
-            <span>Send Love Burst 💖</span>
+            <span>Send Heart Fireworks 💖</span>
           </button>
 
           <button
-            onClick={() => {
-              soundEngine.playClick();
-              onRestart();
-            }}
+            onClick={handleReplay}
             className="w-full sm:w-auto glass-pill hover:bg-white/15 py-3.5 px-7 rounded-full text-pink-100 text-sm font-code flex items-center justify-center gap-2 border border-white/20 transition-all active:scale-95"
           >
             <RefreshCw className="w-4 h-4 text-pink-300" />
-            <span>Replay Experience</span>
+            <span>Replay Love Journey</span>
           </button>
         </div>
       </div>
 
       {/* Footer */}
-      <footer className="mt-12 text-center text-xs font-code text-pink-200/70 space-y-1.5">
+      <footer className="mt-8 text-center text-xs font-code text-pink-200/70 space-y-1.5">
         <p className="flex items-center justify-center gap-1.5">
           <Code className="w-3.5 h-3.5 text-pink-300" />
-          <span>Designed, Developed & Deployed with ❤️ by Om for Dhvani.</span>
+          <span>Handcrafted with ❤️ by Om for Dhvani.</span>
         </p>
         <p className="text-slate-400/50 text-[10px]">
           © {new Date().getFullYear()} RelationshipOS Kernel // Made exclusively for Dhvani
         </p>
       </footer>
-    </motion.div>
+    </div>
   );
 };

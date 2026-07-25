@@ -1,78 +1,110 @@
 import React, { useState } from 'react';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+
+// Page Components (Pages 1 to 13)
+import { FingerprintAuth } from './components/FingerprintAuth';
 import { TerminalBoot } from './components/TerminalBoot';
 import { HeroWelcome } from './components/HeroWelcome';
+import { LoveEnvelope } from './components/LoveEnvelope';
+import { BloomingRose } from './components/BloomingRose';
+import { ShootingStar } from './components/ShootingStar';
+import { HeartSync } from './components/HeartSync';
+import { OurStoryTimeline } from './components/OurStoryTimeline';
+import { DevTerminal } from './components/DevTerminal';
+import { FunButtons } from './components/FunButtons';
 import { LoveProtocolQuiz } from './components/LoveProtocolQuiz';
 import { NightSkyLetter } from './components/NightSkyLetter';
 import { GrandFinale } from './components/GrandFinale';
+
+// Global Overlays & Controls
+import { NavigationHeader } from './components/NavigationHeader';
 import { HeartCursorTrail } from './components/HeartCursorTrail';
 import { BackgroundParticles } from './components/BackgroundParticles';
-import { HeaderControls } from './components/HeaderControls';
 import { EasterEggsModal } from './components/EasterEggsModal';
-
-type AppStage = 'terminal' | 'welcome' | 'quiz' | 'letter' | 'finale';
+import { HiddenHeartEasterEgg } from './components/HiddenHeartEasterEgg';
 
 export function App() {
-  const [stage, setStage] = useState<AppStage>('terminal');
+  const [currentPageIndex, setCurrentPageIndex] = useState<number>(0); // 0 to 12 (13 pages total)
   const [isOpenHint, setIsOpenHint] = useState<boolean>(false);
 
+  const handleNextPage = () => {
+    setCurrentPageIndex((prev) => Math.min(12, prev + 1));
+  };
+
+  const handleNavigateToPage = (index: number) => {
+    setCurrentPageIndex(index);
+  };
+
+  const renderCurrentPage = () => {
+    switch (currentPageIndex) {
+      case 0:
+        return <FingerprintAuth onAuthenticated={() => handleNavigateToPage(1)} />;
+      case 1:
+        return <TerminalBoot onComplete={() => handleNavigateToPage(2)} />;
+      case 2:
+        return <HeroWelcome onStartQuiz={() => handleNavigateToPage(3)} />;
+      case 3:
+        return <LoveEnvelope onNext={() => handleNavigateToPage(4)} />;
+      case 4:
+        return <BloomingRose onNext={() => handleNavigateToPage(5)} />;
+      case 5:
+        return <ShootingStar onNext={() => handleNavigateToPage(6)} />;
+      case 6:
+        return <HeartSync onNext={() => handleNavigateToPage(7)} />;
+      case 7:
+        return <OurStoryTimeline onNext={() => handleNavigateToPage(8)} />;
+      case 8:
+        return <DevTerminal onNext={() => handleNavigateToPage(9)} />;
+      case 9:
+        return <FunButtons onNext={() => handleNavigateToPage(10)} />;
+      case 10:
+        return <LoveProtocolQuiz onQuizComplete={() => handleNavigateToPage(11)} />;
+      case 11:
+        return <NightSkyLetter onOneLastClick={() => handleNavigateToPage(12)} />;
+      case 12:
+        return <GrandFinale onRestart={() => handleNavigateToPage(0)} />;
+      default:
+        return <FingerprintAuth onAuthenticated={() => handleNavigateToPage(1)} />;
+    }
+  };
+
+  const isNightSkyMode = currentPageIndex === 5 || currentPageIndex === 11 || currentPageIndex === 12;
+
   return (
-    <div className="min-h-screen w-full relative bg-[#0b0612] text-slate-100 overflow-x-hidden select-none font-sans">
+    <div className="min-h-screen w-full relative bg-[#0b0612] text-slate-100 overflow-x-hidden select-none font-sans flex flex-col justify-between">
       {/* 1. Custom Interactive Heart Cursor Trail */}
       <HeartCursorTrail />
 
-      {/* 2. Dynamic Particle Canvas Background */}
-      <BackgroundParticles mode={stage === 'letter' || stage === 'finale' ? 'nightsky' : 'default'} />
+      {/* 2. Dynamic Canvas Background Particles */}
+      <BackgroundParticles mode={isNightSkyMode ? 'nightsky' : 'default'} />
 
-      {/* 3. Header Controls (Visible after Terminal Boot) */}
-      {stage !== 'terminal' && (
-        <HeaderControls
-          currentStage={stage}
-          onOpenSecretHint={() => setIsOpenHint(true)}
-        />
-      )}
+      {/* 3. Navigation Header & Page Selector Controls */}
+      <NavigationHeader
+        currentPageIndex={currentPageIndex}
+        onNavigate={handleNavigateToPage}
+        onOpenSecretHint={() => setIsOpenHint(true)}
+      />
 
-      {/* 4. Main Stage Content Viewport */}
-      <main className="relative z-10 w-full min-h-screen flex flex-col justify-center items-center">
+      {/* 4. Main Page Viewport with Smooth Page Transitions */}
+      <main className="relative z-10 w-full min-h-screen flex flex-col justify-center items-center pt-14 pb-16 px-2 sm:px-4">
         <AnimatePresence mode="wait">
-          {stage === 'terminal' && (
-            <TerminalBoot
-              key="terminal-stage"
-              onComplete={() => setStage('welcome')}
-            />
-          )}
-
-          {stage === 'welcome' && (
-            <HeroWelcome
-              key="welcome-stage"
-              onStartQuiz={() => setStage('quiz')}
-            />
-          )}
-
-          {stage === 'quiz' && (
-            <LoveProtocolQuiz
-              key="quiz-stage"
-              onQuizComplete={() => setStage('letter')}
-            />
-          )}
-
-          {stage === 'letter' && (
-            <NightSkyLetter
-              key="letter-stage"
-              onOneLastClick={() => setStage('finale')}
-            />
-          )}
-
-          {stage === 'finale' && (
-            <GrandFinale
-              key="finale-stage"
-              onRestart={() => setStage('welcome')}
-            />
-          )}
+          <motion.div
+            key={currentPageIndex}
+            initial={{ opacity: 0, x: 40, scale: 0.98 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: -40, scale: 0.98 }}
+            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full flex justify-center items-center"
+          >
+            {renderCurrentPage()}
+          </motion.div>
         </AnimatePresence>
       </main>
 
-      {/* 5. Secret Easter Egg Listener & Hints Drawer */}
+      {/* 5. Secret Hidden Heart Easter Egg */}
+      <HiddenHeartEasterEgg />
+
+      {/* 6. Keyboard Easter Eggs Listener & Hints Modal */}
       <EasterEggsModal
         isOpenHint={isOpenHint}
         onCloseHint={() => setIsOpenHint(false)}
