@@ -25,11 +25,20 @@ export const PAGES_LIST: PageInfo[] = [
   { id: 10, title: 'System Controls', subtitle: 'Download Heart & Protection', icon: '🎛️' },
   { id: 11, title: 'Love Quiz', subtitle: 'Developer Compatibility', icon: '❓' },
   { id: 12, title: 'Night Sky Letter', subtitle: 'Typewriter Heart Letter', icon: '🌌' },
-  { id: 13, title: 'Grand Finale', subtitle: 'Infinite Love Celebration', icon: '🎆' },
+  { id: 13, title: 'Our Universe', subtitle: 'Cosmic Zoom to You', icon: '🌍' },
+  { id: 14, title: 'Love DNA Scanner', subtitle: 'Compatibility Analysis', icon: '🧬' },
+  { id: 15, title: 'Commit History', subtitle: 'Love GitHub Repo', icon: '💻' },
+  { id: 16, title: 'Relationship DB', subtitle: 'Heart SQL Query', icon: '🗄️' },
+  { id: 17, title: 'LoveGPT', subtitle: 'AI Romance Chatbot', icon: '🤖' },
+  { id: 18, title: 'Flower Garden', subtitle: 'Enchanted Magical Garden', icon: '🌸' },
+  { id: 19, title: 'A Quiet Moment', subtitle: 'Heartfelt Message', icon: '💔' },
+  { id: 20, title: 'Grand Finale', subtitle: 'Infinite Love Celebration', icon: '🎆' },
+  { id: 21, title: 'Our Gallery', subtitle: 'Interactive Memory Museum', icon: '🖼️' },
+  { id: 22, title: 'Valentine Edition', subtitle: 'Blush Pink Romantic Landing', icon: '💌' },
 ];
 
 interface NavigationHeaderProps {
-  currentPageIndex: number; // 0-indexed (0 to 12)
+  currentPageIndex: number; // 0-indexed (0 to 13)
   onNavigate: (pageIndex: number) => void;
   onOpenSecretHint: () => void;
 }
@@ -86,6 +95,20 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
 
         {/* Action Controls */}
         <div className="flex items-center gap-2 sm:gap-3">
+          {/* Direct Standalone Gallery Link */}
+          <button
+            onClick={() => handleJumpToPage(13)}
+            className={`glass-pill px-3.5 py-1.5 text-xs font-semibold transition-all flex items-center gap-1.5 border active:scale-95 ${
+              currentPageIndex === 13
+                ? 'bg-pink-500/30 border-pink-400 text-white shadow-[0_0_15px_rgba(236,72,153,0.5)]'
+                : 'border-pink-400/40 text-pink-200 hover:text-white hover:border-pink-400/80 shadow-[0_0_15px_rgba(236,72,153,0.2)]'
+            }`}
+            title="Open Standalone Memory Gallery Page"
+          >
+            <span>🖼️</span>
+            <span className="font-code">Our Gallery</span>
+          </button>
+
           {/* Secret Hints */}
           <button
             onClick={() => {

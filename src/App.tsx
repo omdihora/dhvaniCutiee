@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
-// Page Components (Pages 1 to 13)
+// Page Components (Pages 1 to 21)
 import { FingerprintAuth } from './components/FingerprintAuth';
 import { TerminalBoot } from './components/TerminalBoot';
 import { HeroWelcome } from './components/HeroWelcome';
@@ -14,7 +14,16 @@ import { DevTerminal } from './components/DevTerminal';
 import { FunButtons } from './components/FunButtons';
 import { LoveProtocolQuiz } from './components/LoveProtocolQuiz';
 import { NightSkyLetter } from './components/NightSkyLetter';
+import { OurUniverse } from './components/OurUniverse';
+import { LoveDNAScanner } from './components/LoveDNAScanner';
+import { GitHubCommitHistory } from './components/GitHubCommitHistory';
+import { RelationshipDatabase } from './components/RelationshipDatabase';
+import { LoveGPTChat } from './components/LoveGPTChat';
+import { EnchantedGarden } from './components/EnchantedGarden';
+import { SilentApology } from './components/SilentApology';
 import { GrandFinale } from './components/GrandFinale';
+import { OurGallery } from './components/OurGallery';
+import { ValentineLanding } from './components/ValentineLanding';
 
 // Global Overlays & Controls
 import { NavigationHeader } from './components/NavigationHeader';
@@ -23,12 +32,14 @@ import { BackgroundParticles } from './components/BackgroundParticles';
 import { EasterEggsModal } from './components/EasterEggsModal';
 import { HiddenHeartEasterEgg } from './components/HiddenHeartEasterEgg';
 
+const TOTAL_PAGES = 22; // 0 to 21
+
 export function App() {
-  const [currentPageIndex, setCurrentPageIndex] = useState<number>(0); // 0 to 12 (13 pages total)
+  const [currentPageIndex, setCurrentPageIndex] = useState<number>(0);
   const [isOpenHint, setIsOpenHint] = useState<boolean>(false);
 
   const handleNextPage = () => {
-    setCurrentPageIndex((prev) => Math.min(12, prev + 1));
+    setCurrentPageIndex((prev) => Math.min(TOTAL_PAGES - 1, prev + 1));
   };
 
   const handleNavigateToPage = (index: number) => {
@@ -42,7 +53,7 @@ export function App() {
       case 1:
         return <TerminalBoot onComplete={() => handleNavigateToPage(2)} />;
       case 2:
-        return <HeroWelcome onStartQuiz={() => handleNavigateToPage(3)} />;
+        return <HeroWelcome onStartQuiz={() => handleNavigateToPage(3)} onOpenGallery={() => handleNavigateToPage(20)} />;
       case 3:
         return <LoveEnvelope onNext={() => handleNavigateToPage(4)} />;
       case 4:
@@ -61,14 +72,36 @@ export function App() {
         return <LoveProtocolQuiz onQuizComplete={() => handleNavigateToPage(11)} />;
       case 11:
         return <NightSkyLetter onOneLastClick={() => handleNavigateToPage(12)} />;
+      // ——— NEW PAGES ———
       case 12:
-        return <GrandFinale onRestart={() => handleNavigateToPage(0)} />;
+        return <OurUniverse onNext={() => handleNavigateToPage(13)} />;
+      case 13:
+        return <LoveDNAScanner onNext={() => handleNavigateToPage(14)} />;
+      case 14:
+        return <GitHubCommitHistory onNext={() => handleNavigateToPage(15)} />;
+      case 15:
+        return <RelationshipDatabase onNext={() => handleNavigateToPage(16)} />;
+      case 16:
+        return <LoveGPTChat onNext={() => handleNavigateToPage(17)} />;
+      case 17:
+        return <EnchantedGarden onNext={() => handleNavigateToPage(18)} />;
+      case 18:
+        return <SilentApology onNext={() => handleNavigateToPage(19)} />;
+      // ——— END NEW PAGES ———
+      case 19:
+        return <GrandFinale onRestart={() => handleNavigateToPage(0)} onOpenGallery={() => handleNavigateToPage(20)} />;
+      case 20:
+        return <OurGallery onNext={() => handleNavigateToPage(0)} />;
+      case 21:
+        return <ValentineLanding onNext={() => handleNavigateToPage(0)} onOpenGallery={() => handleNavigateToPage(20)} />;
       default:
         return <FingerprintAuth onAuthenticated={() => handleNavigateToPage(1)} />;
     }
   };
 
-  const isNightSkyMode = currentPageIndex === 5 || currentPageIndex === 11 || currentPageIndex === 12;
+  const isNightSkyMode = currentPageIndex === 5 || currentPageIndex === 11 || currentPageIndex === 18 || currentPageIndex === 19;
+  const isFullBleedPage = currentPageIndex === 2 || currentPageIndex === 17 || currentPageIndex === 20 || currentPageIndex === 21;
+  const isHeroPage = currentPageIndex === 2;
 
   return (
     <div className="min-h-screen w-full relative bg-[#0b0612] text-slate-100 overflow-x-hidden select-none font-sans flex flex-col justify-between">
@@ -76,17 +109,19 @@ export function App() {
       <HeartCursorTrail />
 
       {/* 2. Dynamic Canvas Background Particles */}
-      <BackgroundParticles mode={isNightSkyMode ? 'nightsky' : 'default'} />
+      {!isHeroPage && <BackgroundParticles mode={isNightSkyMode ? 'nightsky' : 'default'} />}
 
-      {/* 3. Navigation Header & Page Selector Controls */}
-      <NavigationHeader
-        currentPageIndex={currentPageIndex}
-        onNavigate={handleNavigateToPage}
-        onOpenSecretHint={() => setIsOpenHint(true)}
-      />
+      {/* 3. Navigation Header & Page Selector Controls (Hidden on Hero to avoid overlap) */}
+      {!isHeroPage && (
+        <NavigationHeader
+          currentPageIndex={currentPageIndex}
+          onNavigate={handleNavigateToPage}
+          onOpenSecretHint={() => setIsOpenHint(true)}
+        />
+      )}
 
       {/* 4. Main Page Viewport with Smooth Page Transitions */}
-      <main className="relative z-10 w-full min-h-screen flex flex-col justify-center items-center pt-14 pb-16 px-2 sm:px-4">
+      <main className={`relative z-10 w-full min-h-screen flex flex-col justify-center items-center ${isFullBleedPage ? 'p-0' : 'pt-14 pb-16 px-2 sm:px-4'}`}>
         <AnimatePresence mode="wait">
           <motion.div
             key={currentPageIndex}

@@ -7,9 +7,10 @@ import { StarEasterEgg } from './StarEasterEgg';
 
 interface GrandFinaleProps {
   onRestart: () => void;
+  onOpenGallery?: () => void;
 }
 
-export const GrandFinale: React.FC<GrandFinaleProps> = ({ onRestart }) => {
+export const GrandFinale: React.FC<GrandFinaleProps> = ({ onRestart, onOpenGallery }) => {
   useEffect(() => {
     soundEngine.playCelebration();
 
@@ -135,24 +136,37 @@ export const GrandFinale: React.FC<GrandFinaleProps> = ({ onRestart }) => {
         </motion.div>
 
         {/* Action Buttons */}
-        <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
+          {onOpenGallery && (
+            <button
+              onClick={() => {
+                soundEngine.playPageSwitch();
+                onOpenGallery();
+              }}
+              className="w-full sm:w-auto glass-button-romantic py-3.5 px-6 rounded-full text-white text-sm font-semibold flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(236,72,153,0.5)] hover:scale-105 active:scale-95 transition-all"
+            >
+              <span>🖼️</span>
+              <span>Visit Our Memory Gallery</span>
+            </button>
+          )}
+
           <button
             onClick={() => {
               soundEngine.playHeartPop();
               confetti({ particleCount: 75, spread: 100 });
             }}
-            className="w-full sm:w-auto glass-button-romantic py-3.5 px-7 rounded-full text-white text-sm font-medium flex items-center justify-center gap-2 border border-white/20"
+            className="w-full sm:w-auto glass-pill hover:bg-white/15 py-3.5 px-5 rounded-full text-white text-sm font-medium flex items-center justify-center gap-2 border border-white/20 active:scale-95"
           >
             <Sparkles className="w-4 h-4 text-amber-300" />
-            <span>Send Heart Fireworks 💖</span>
+            <span>Fireworks</span>
           </button>
 
           <button
             onClick={handleReplay}
-            className="w-full sm:w-auto glass-pill hover:bg-white/15 py-3.5 px-7 rounded-full text-pink-100 text-sm font-code flex items-center justify-center gap-2 border border-white/20 transition-all active:scale-95"
+            className="w-full sm:w-auto glass-pill hover:bg-white/15 py-3.5 px-5 rounded-full text-pink-100 text-sm font-code flex items-center justify-center gap-2 border border-white/20 transition-all active:scale-95"
           >
             <RefreshCw className="w-4 h-4 text-pink-300" />
-            <span>Replay Love Journey</span>
+            <span>Replay</span>
           </button>
         </div>
       </div>
