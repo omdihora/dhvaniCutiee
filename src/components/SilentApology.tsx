@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles, Sun, CloudRain } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { soundEngine } from '../utils/audio';
 
@@ -33,26 +33,13 @@ const APOLOGY_PARAGRAPHS = [
 ];
 
 export const SilentApology: React.FC<SilentApologyProps> = ({ onNext }) => {
-  const [phase, setPhase] = useState<'dimming' | 'typing' | 'bloom'>('dimming');
+  const [phase, setPhase] = useState<'rain' | 'clearing' | 'sunlight'>('rain');
   const [typedParagraphs, setTypedParagraphs] = useState<string[]>([]);
   const [currentLine, setCurrentLine] = useState('');
-  const [currentParaIdx, setCurrentParaIdx] = useState(0);
-  const [heartScale, setHeartScale] = useState(1);
+  const [, setCurrentParaIdx] = useState(0);
 
-  // Phase 1: Dimming — silence, fade to near black, single heart
   useEffect(() => {
     soundEngine.stopAmbientBGM();
-
-    const timer = setTimeout(() => {
-      setPhase('typing');
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Phase 2: Typing the apology letter
-  useEffect(() => {
-    if (phase !== 'typing') return;
     let isCancelled = false;
 
     const typeAllParagraphs = async () => {
@@ -61,20 +48,22 @@ export const SilentApology: React.FC<SilentApologyProps> = ({ onNext }) => {
         const paragraph = APOLOGY_PARAGRAPHS[pIdx];
         setCurrentParaIdx(pIdx);
 
+        // Environment shifts from rain to clearing halfway through
+        if (pIdx === Math.floor(APOLOGY_PARAGRAPHS.length * 0.4)) {
+          setPhase('clearing');
+        }
+
         // Type character by character
         for (let charIdx = 0; charIdx <= paragraph.length; charIdx++) {
           if (isCancelled) return;
           setCurrentLine(paragraph.slice(0, charIdx));
-          // Slower typing for emotional impact
           const delay = paragraph === "I'm sorry." ? 60 : 28;
           await new Promise((r) => setTimeout(r, delay));
         }
 
-        // Add completed paragraph
         setTypedParagraphs((prev) => [...prev, paragraph]);
         setCurrentLine('');
 
-        // Longer pauses at emotional moments
         const isEmotionalPause = [
           "Dhvani...",
           "I'm sorry.",
@@ -85,202 +74,145 @@ export const SilentApology: React.FC<SilentApologyProps> = ({ onNext }) => {
         await new Promise((r) => setTimeout(r, isEmotionalPause ? 1200 : 500));
       }
 
-      // All done — bloom phase
+      // All done — full sunlight bloom
       if (!isCancelled) {
-        setTimeout(() => {
-          setPhase('bloom');
-          soundEngine.playHeartPop();
-          soundEngine.playCelebration();
+        setPhase('sunlight');
+        soundEngine.playHeartPop();
+        soundEngine.playCelebration();
+        soundEngine.startAmbientBGM();
 
-          // Gentle confetti
-          confetti({
-            particleCount: 80,
-            spread: 120,
-            origin: { y: 0.7 },
-            colors: ['#fadadd', '#f8c8dc', '#ec4899', '#f43f5e', '#c084fc'],
-            gravity: 0.6,
-          });
-        }, 1500);
+        confetti({
+          particleCount: 100,
+          spread: 120,
+          origin: { y: 0.7 },
+          colors: ['#f7e7ce', '#fadadd', '#f8c8dc', '#d4af37', '#e5c158'],
+        });
       }
     };
 
     typeAllParagraphs();
-    return () => { isCancelled = true; };
-  }, [phase]);
 
-  // Heart pulse
-  useEffect(() => {
-    if (phase !== 'dimming' && phase !== 'typing') return;
-    const interval = setInterval(() => {
-      setHeartScale((prev) => (prev === 1 ? 1.12 : 1));
-    }, 800);
-    return () => clearInterval(interval);
-  }, [phase]);
+    return () => {
+      isCancelled = true;
+    };
+  }, []);
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center px-4 py-12 relative my-auto">
-      {/* Dark overlay that dims everything */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: phase === 'dimming' ? 0.95 : 0.85 }}
-        className="fixed inset-0 bg-black z-0 pointer-events-none"
-      />
-
-      {/* Dimming phase — single heart */}
-      <AnimatePresence>
-        {phase === 'dimming' && (
+    <div className="min-h-screen w-full relative flex flex-col items-center justify-center p-4 sm:p-8 select-none transition-colors duration-1000 overflow-hidden bg-[#0f051d]">
+      {/* Dynamic Weather Background */}
+      <AnimatePresence mode="wait">
+        {phase === 'rain' && (
           <motion.div
-            key="dimming"
+            key="rain-bg"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0, y: -30 }}
-            transition={{ duration: 1.5 }}
-            className="z-10 flex flex-col items-center text-center"
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 bg-gradient-to-b from-[#111827] via-[#1f2937] to-[#0f051d] z-0"
           >
-            {/* Soft glow behind heart */}
-            <div className="absolute w-40 h-40 rounded-full bg-pink-500/10 blur-[60px]" />
+            {/* Rainy drops */}
+            {Array.from({ length: 40 }, (_, i) => (
+              <div
+                key={`rain-${i}`}
+                className="absolute w-0.5 h-6 bg-slate-400/40 rounded-full animate-petal-fall"
+                style={{
+                  left: `${(i * 2.5) % 100}%`,
+                  top: '-10%',
+                  animationDuration: `${1 + Math.random() * 0.8}s`,
+                  animationDelay: `${Math.random() * 2}s`,
+                }}
+              />
+            ))}
+          </motion.div>
+        )}
 
-            <motion.div
-              animate={{ scale: [1, 1.12, 1] }}
-              transition={{ repeat: Infinity, duration: 1.6, ease: 'easeInOut' }}
-              className="text-6xl sm:text-7xl drop-shadow-[0_0_30px_rgba(244,63,94,0.6)]"
-            >
-              ❤️
-            </motion.div>
+        {phase === 'clearing' && (
+          <motion.div
+            key="clearing-bg"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 bg-gradient-to-b from-[#2d0a10] via-[#3b0914] to-[#0f051d] z-0"
+          />
+        )}
 
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.5 }}
-              transition={{ delay: 1.5 }}
-              className="text-pink-200/40 text-xs font-code mt-6 tracking-widest"
-            >
-              ...
-            </motion.p>
+        {phase === 'sunlight' && (
+          <motion.div
+            key="sunlight-bg"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="absolute inset-0 bg-gradient-to-b from-[#5c1325] via-[#2d0a10] to-[#0f051d] z-0"
+          >
+            {/* Golden Sunlight Rays */}
+            <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#d4af37]/20 rounded-full blur-3xl animate-pulse" />
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Typing phase — the heartfelt message */}
-      {(phase === 'typing' || phase === 'bloom') && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.5 }}
-          className="z-10 w-full max-w-xl flex flex-col items-center"
-        >
-          {/* Small heart at top */}
-          <motion.div
-            style={{ scale: heartScale }}
-            transition={{ duration: 0.4 }}
-            className="text-3xl mb-8 drop-shadow-[0_0_20px_rgba(244,63,94,0.5)]"
-          >
-            ❤️
-          </motion.div>
-
-          {/* Letter Container */}
-          <div className="w-full space-y-4 max-h-[60vh] overflow-y-auto px-2 custom-scrollbar">
-            {typedParagraphs.map((para, idx) => {
-              const isShort = para === "Dhvani..." || para === "I'm sorry." || para === "❤️ — Om.";
-              const isSignature = para === "❤️ — Om.";
-
-              return (
-                <motion.p
-                  key={idx}
-                  initial={{ opacity: 0.5 }}
-                  animate={{ opacity: 1 }}
-                  className={`leading-relaxed ${
-                    isSignature
-                      ? 'text-right text-xl font-handwritten text-pink-300 pr-4 pt-4'
-                      : isShort
-                      ? 'text-center text-xl sm:text-2xl font-semibold text-white'
-                      : 'text-center text-base sm:text-lg text-pink-100/90 font-light'
-                  }`}
-                >
-                  {para}
-                </motion.p>
-              );
-            })}
-
-            {/* Currently typing line */}
-            {currentLine && (
-              <p className={`leading-relaxed text-center ${
-                APOLOGY_PARAGRAPHS[currentParaIdx] === "Dhvani..." ||
-                APOLOGY_PARAGRAPHS[currentParaIdx] === "I'm sorry." ||
-                APOLOGY_PARAGRAPHS[currentParaIdx] === "❤️ — Om."
-                  ? 'text-xl sm:text-2xl font-semibold text-white'
-                  : 'text-base sm:text-lg text-pink-100/90 font-light'
-              }`}>
-                {currentLine}
-                <motion.span
-                  animate={{ opacity: [1, 0] }}
-                  transition={{ repeat: Infinity, duration: 0.6 }}
-                  className="inline-block w-0.5 h-5 bg-pink-400/80 ml-1 align-middle"
-                />
-              </p>
+      {/* Main Apology Letter Card */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8 }}
+        className="w-full max-w-2xl z-10 glass-card-luxury bg-[#0f051d]/90 border-2 border-[#f7e7ce]/40 rounded-[36px] p-6 sm:p-10 shadow-[0_20px_80px_rgba(212,175,55,0.3)] my-auto relative"
+      >
+        {/* Weather Indicator Header */}
+        <div className="flex items-center justify-between border-b border-[#f7e7ce]/20 pb-4 mb-6">
+          <div className="flex items-center gap-2 text-[#f7e7ce] font-serif-luxury text-sm">
+            {phase === 'rain' ? (
+              <CloudRain className="w-4 h-4 text-slate-400 animate-bounce" />
+            ) : (
+              <Sun className="w-4 h-4 text-[#e5c158] animate-spin" style={{ animationDuration: '8s' }} />
             )}
+            <span>{phase === 'rain' ? 'Rainy Quiet Forest' : 'Sunlight Breaking Through'}</span>
           </div>
 
-          {/* Bloom phase — soft bloom of hearts and butterflies */}
-          <AnimatePresence>
-            {phase === 'bloom' && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="fixed inset-0 pointer-events-none z-20 overflow-hidden"
-              >
-                {/* Floating hearts bloom */}
-                {[...Array(20)].map((_, i) => (
-                  <motion.div
-                    key={`heart-${i}`}
-                    initial={{
-                      opacity: 0,
-                      scale: 0,
-                      x: window.innerWidth / 2 - 12,
-                      y: window.innerHeight / 2,
-                    }}
-                    animate={{
-                      opacity: [0, 0.8, 0],
-                      scale: [0, 1, 0.5],
-                      x: window.innerWidth / 2 + (Math.random() - 0.5) * 600,
-                      y: Math.random() * window.innerHeight * 0.5,
-                    }}
-                    transition={{
-                      duration: 3 + Math.random() * 2,
-                      delay: i * 0.15,
-                      ease: 'easeOut',
-                    }}
-                    className="absolute text-xl sm:text-2xl"
-                  >
-                    {['❤️', '💖', '💕', '🦋', '🌸', '✨'][i % 6]}
-                  </motion.div>
-                ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
+          <div className="text-xs font-mono text-[#d4af37]">CHAPTER: HEAVENLY_APOLOGY</div>
+        </div>
 
-          {/* Continue Button — only in bloom */}
-          {phase === 'bloom' && onNext && (
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
+        {/* Typed Paragraphs */}
+        <div className="space-y-4 text-left font-handwritten text-xl sm:text-2xl text-[#f7e7ce] leading-relaxed min-h-[300px]">
+          {typedParagraphs.map((para, idx) => (
+            <motion.p
+              key={idx}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 2 }}
-              className="mt-10"
+              transition={{ duration: 0.5 }}
+              className={para.includes('Om') ? 'text-2xl sm:text-3xl font-bold text-[#d4af37] text-right mt-4 font-serif-luxury' : ''}
             >
-              <button
-                onClick={() => {
-                  soundEngine.playPageSwitch();
-                  onNext();
-                }}
-                className="glass-button-romantic px-8 py-3.5 rounded-full text-white font-medium text-base flex items-center gap-3 shadow-[0_0_30px_rgba(236,72,153,0.5)] hover:scale-105 active:scale-95 transition-all"
-              >
-                <Sparkles className="w-4 h-4 text-amber-300" />
-                <span>Forever Begins Now</span>
-                <ArrowRight className="w-4 h-4 text-pink-300" />
-              </button>
-            </motion.div>
+              {para}
+            </motion.p>
+          ))}
+
+          {currentLine && (
+            <p className="text-pink-100">
+              {currentLine}
+              <span className="inline-block w-2 h-5 bg-[#f7e7ce] animate-pulse ml-1" />
+            </p>
           )}
-        </motion.div>
-      )}
+        </div>
+
+        {/* Sunlight Climax Continue Button */}
+        {phase === 'sunlight' && onNext && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="pt-6 border-t border-[#f7e7ce]/20 flex justify-center"
+          >
+            <button
+              onClick={() => {
+                soundEngine.playPageSwitch();
+                onNext();
+              }}
+              className="px-8 py-3.5 rounded-full bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#b76e79] text-[#0f051d] text-sm font-semibold flex items-center gap-2 shadow-[0_0_30px_rgba(212,175,55,0.5)] hover:scale-105 active:scale-95 transition-all font-serif-luxury cursor-pointer"
+            >
+              <Sparkles className="w-4 h-4 text-[#0f051d]" />
+              <span>Sunlight Restored — Continue Journey ❤️</span>
+              <ArrowRight className="w-4 h-4 text-[#0f051d]" />
+            </button>
+          </motion.div>
+        )}
+      </motion.div>
     </div>
   );
 };

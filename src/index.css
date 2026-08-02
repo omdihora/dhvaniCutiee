@@ -9,35 +9,44 @@
   :root {
     /* ─── Typography ─── */
     --font-display: 'Playfair Display', Georgia, serif;
+    --font-serif-luxury: 'Cormorant Garamond', serif;
     --font-body: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-handwritten: 'Caveat', cursive;
 
-    /* ─── Romantic Color Palette ─── */
+    /* ─── Romantic & Luxury Palette ─── */
     --color-blush: #fadadd;
     --color-baby-pink: #f8c8dc;
     --color-pastel-pink: #ffd6e8;
     --color-lavender: #e6d5ff;
     --color-lilac: #d8b4fe;
     --color-rose-gold: #b76e79;
-    --color-ivory: #fffff0;
+    --color-champagne: #f7e7ce;
+    --color-gold: #d4af37;
+    --color-warm-gold: #e5c158;
+    --color-ivory: #fdfbf7;
     --color-pearl: #f5f0eb;
-    --color-peach: #ffdab9;
+    --color-mauve: #e0b0ff;
+    --color-deep-wine: #3b0914;
+    --color-wine: #5c1325;
+    --color-rich-burgundy: #2d0a10;
     --color-cream: #fffdd0;
     --color-soft-rose: #f4a0b5;
     --color-deep-rose: #e11d48;
     --color-warm-pink: #ec4899;
 
-    /* ─── Sunset Gradients ─── */
-    --gradient-sunset: linear-gradient(135deg, #ffd6e8 0%, #e6d5ff 30%, #fadadd 60%, #ffdab9 100%);
-    --gradient-sunrise: linear-gradient(180deg, #1a0a2e 0%, #2d1045 20%, #6b2f6b 40%, #e8847c 65%, #f9c58d 80%, #fffff0 100%);
-    --gradient-dream: linear-gradient(135deg, rgba(230,213,255,0.15), rgba(255,214,232,0.15), rgba(250,218,221,0.15));
-    --gradient-glass: linear-gradient(135deg, rgba(255,214,232,0.08), rgba(230,213,255,0.08));
-    --gradient-rose-gold: linear-gradient(135deg, #b76e79, #e8a0b0, #d4a574);
+    /* ─── Sunset & Luxury Gradients ─── */
+    --gradient-gold: linear-gradient(135deg, #f7e7ce 0%, #d4af37 50%, #e5c158 100%);
+    --gradient-sunset: linear-gradient(135deg, #ffd6e8 0%, #e6d5ff 30%, #fadadd 60%, #f7e7ce 100%);
+    --gradient-sunrise: linear-gradient(180deg, #0f051d 0%, #2d0a10 25%, #5c1325 50%, #e8847c 70%, #f7e7ce 85%, #fdfbf7 100%);
+    --gradient-dream: linear-gradient(135deg, rgba(230,213,255,0.15), rgba(255,214,232,0.15), rgba(247,231,206,0.15));
+    --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(247,231,206,0.06));
+    --gradient-rose-gold: linear-gradient(135deg, #b76e79, #e8a0b0, #d4af37);
+    --gradient-wine: linear-gradient(135deg, #2d0a10 0%, #5c1325 50%, #1a0a2e 100%);
 
     /* ─── Background ─── */
     --bg-deep: #0f051d;
-    --bg-surface: #1a0a2e;
-    --bg-elevated: #241240;
+    --bg-surface: #180929;
+    --bg-elevated: #230d3a;
 
     /* ─── Spacing & Radius ─── */
     --radius-sm: 12px;
@@ -84,6 +93,11 @@
   font-feature-settings: 'liga' on, 'kern' on;
 }
 
+.font-serif-luxury {
+  font-family: var(--font-serif-luxury);
+  font-feature-settings: 'liga' on, 'kern' on;
+}
+
 .font-body {
   font-family: var(--font-body);
 }
@@ -93,7 +107,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   GLASSMORPHISM DESIGN SYSTEM
+   LUXURY GLASSMORPHISM SYSTEM
    ═══════════════════════════════════════════════════════════════ */
 
 .glass-card {
@@ -108,36 +122,47 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
+.glass-card-luxury {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(247, 231, 206, 0.05),
+    rgba(230, 213, 255, 0.04)
+  );
+  backdrop-filter: blur(32px) saturate(180%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
+  border: 1px solid rgba(247, 231, 206, 0.25);
+  border-radius: var(--radius-xl);
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.4),
+    0 0 50px rgba(212, 175, 55, 0.1),
+    inset 0 1px 1px rgba(255, 255, 255, 0.3);
+}
+
 .glass-card-romantic {
   background: linear-gradient(
     135deg,
-    rgba(255, 214, 232, 0.06),
-    rgba(230, 213, 255, 0.06),
-    rgba(250, 218, 221, 0.04)
+    rgba(255, 214, 232, 0.07),
+    rgba(230, 213, 255, 0.07),
+    rgba(247, 231, 206, 0.05)
   );
   backdrop-filter: blur(30px) saturate(160%);
   -webkit-backdrop-filter: blur(30px) saturate(160%);
-  border: 1px solid rgba(250, 218, 221, 0.15);
+  border: 1px solid rgba(250, 218, 221, 0.2);
   border-radius: var(--radius-lg);
   box-shadow:
-    0 24px 64px rgba(0, 0, 0, 0.25),
+    0 24px 64px rgba(0, 0, 0, 0.3),
     0 0 50px rgba(236, 72, 153, 0.08),
     inset 0 1px 1px rgba(255, 255, 255, 0.2);
 }
 
-.glass-card-romantic:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 214, 232, 0.1),
-    rgba(230, 213, 255, 0.1),
-    rgba(250, 218, 221, 0.08)
-  );
-  border-color: rgba(250, 218, 221, 0.3);
+.glass-card-romantic:hover, .glass-card-luxury:hover {
+  border-color: rgba(247, 231, 206, 0.45);
   box-shadow:
-    0 30px 80px rgba(236, 72, 153, 0.15),
-    0 0 60px rgba(216, 180, 254, 0.12),
-    inset 0 1px 2px rgba(255, 255, 255, 0.3);
-  transform: translateY(-2px);
+    0 35px 100px rgba(212, 175, 55, 0.15),
+    0 0 60px rgba(236, 72, 153, 0.15),
+    inset 0 1px 2px rgba(255, 255, 255, 0.4);
+  transform: translateY(-3px);
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 

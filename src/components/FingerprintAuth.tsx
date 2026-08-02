@@ -77,10 +77,10 @@ export const FingerprintAuth: React.FC<FingerprintAuthProps> = ({ onAuthenticate
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center p-4 sm:p-6 relative overflow-hidden my-auto">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center p-4 sm:p-6 relative overflow-hidden my-auto bg-[#0f051d]">
       {/* Background Ambient Glowing Orbs */}
-      <div className="absolute w-[500px] h-[500px] bg-pink-500/15 rounded-full blur-[160px] pointer-events-none animate-aurora top-1/4 left-1/4" />
-      <div className="absolute w-[400px] h-[400px] bg-purple-500/15 rounded-full blur-[140px] pointer-events-none animate-aurora bottom-1/4 right-1/4" />
+      <div className="absolute w-[500px] h-[500px] bg-[#d4af37]/15 rounded-full blur-[160px] pointer-events-none animate-aurora top-1/4 left-1/4" />
+      <div className="absolute w-[400px] h-[400px] bg-[#2d0a10]/40 rounded-full blur-[140px] pointer-events-none animate-aurora bottom-1/4 right-1/4" />
 
       {/* Header Badge */}
       <motion.div
@@ -89,14 +89,14 @@ export const FingerprintAuth: React.FC<FingerprintAuthProps> = ({ onAuthenticate
         transition={{ delay: 0.2 }}
         className="text-center mb-10 z-10"
       >
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full ribbon-badge text-pink-100 text-xs font-code mb-4 shadow-md">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-pill text-[#f7e7ce] text-xs font-mono mb-4 shadow-md">
           <ShieldCheck className="w-4 h-4 text-emerald-400" />
           <span>PAGE 1 // BIOMETRIC_SECURITY_GATEWAY</span>
         </div>
-        <h1 className="text-3xl sm:text-5xl font-extrabold bg-gradient-to-r from-pink-200 via-rose-200 to-purple-200 bg-clip-text text-transparent tracking-tight">
-          RelationshipOS Security Scanner
+        <h1 className="text-3xl sm:text-5xl font-serif-luxury font-bold bg-gradient-to-r from-[#f7e7ce] via-[#fadadd] to-[#d4af37] bg-clip-text text-transparent tracking-tight">
+          RelationshipOS Security Gateway
         </h1>
-        <p className="text-pink-200/70 text-sm mt-3 font-code">
+        <p className="text-[#f7e7ce]/80 text-sm mt-3 font-mono">
           Hold sensor for 3 seconds to prove you are Dhvani ❤️
         </p>
       </motion.div>
@@ -111,9 +111,9 @@ export const FingerprintAuth: React.FC<FingerprintAuthProps> = ({ onAuthenticate
         {/* Radiating Pulse Rings */}
         {isHolding && (
           <>
-            <div className="absolute w-52 h-52 rounded-full border-2 border-pink-400/40 fingerprint-pulse-ring" />
-            <div className="absolute w-64 h-64 rounded-full border border-pink-400/30 fingerprint-pulse-ring" style={{ animationDelay: '0.4s' }} />
-            <div className="absolute w-72 h-72 rounded-full border border-pink-400/20 fingerprint-pulse-ring" style={{ animationDelay: '0.8s' }} />
+            <div className="absolute w-52 h-52 rounded-full border-2 border-[#d4af37]/50 fingerprint-pulse-ring" />
+            <div className="absolute w-64 h-64 rounded-full border border-[#f7e7ce]/40 fingerprint-pulse-ring" style={{ animationDelay: '0.4s' }} />
+            <div className="absolute w-72 h-72 rounded-full border border-[#d4af37]/30 fingerprint-pulse-ring" style={{ animationDelay: '0.8s' }} />
           </>
         )}
 
@@ -122,7 +122,7 @@ export const FingerprintAuth: React.FC<FingerprintAuthProps> = ({ onAuthenticate
           <circle
             cx="100" cy="100" r="90"
             fill="none"
-            stroke="rgba(236, 72, 153, 0.15)"
+            stroke="rgba(247, 231, 206, 0.15)"
             strokeWidth="5"
           />
           <motion.circle
@@ -133,13 +133,13 @@ export const FingerprintAuth: React.FC<FingerprintAuthProps> = ({ onAuthenticate
             strokeLinecap="round"
             strokeDasharray={565.48}
             strokeDashoffset={565.48 * (1 - progress / 100)}
-            style={{ filter: 'drop-shadow(0 0 10px rgba(236, 72, 153, 0.7))' }}
+            style={{ filter: 'drop-shadow(0 0 10px rgba(212, 175, 55, 0.7))' }}
           />
           <defs>
             <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#ec4899" />
-              <stop offset="50%" stopColor="#f43f5e" />
-              <stop offset="100%" stopColor="#a855f7" />
+              <stop offset="0%" stopColor="#f7e7ce" />
+              <stop offset="50%" stopColor="#d4af37" />
+              <stop offset="100%" stopColor="#b76e79" />
             </linearGradient>
           </defs>
         </svg>
@@ -155,15 +155,15 @@ export const FingerprintAuth: React.FC<FingerprintAuthProps> = ({ onAuthenticate
             phase === 'verified'
               ? 'bg-emerald-500/25 border-2 border-emerald-400 shadow-[0_0_70px_rgba(52,211,153,0.6)]'
               : isHolding
-              ? 'bg-pink-500/25 border-2 border-pink-400 shadow-[0_0_70px_rgba(236,72,153,0.7)] scale-95'
-              : 'bg-white/5 border-2 border-pink-300/30 shadow-[0_0_40px_rgba(236,72,153,0.2)] hover:border-pink-400/60 hover:shadow-[0_0_50px_rgba(236,72,153,0.4)]'
+              ? 'bg-[#d4af37]/25 border-2 border-[#f7e7ce] shadow-[0_0_70px_rgba(212,175,55,0.7)] scale-95'
+              : 'bg-white/5 border-2 border-[#f7e7ce]/30 shadow-[0_0_40px_rgba(212,175,55,0.2)] hover:border-[#f7e7ce]/60 hover:shadow-[0_0_50px_rgba(212,175,55,0.4)]'
           }`}
           disabled={phase === 'verified' || phase === 'verifying'}
         >
           {/* Scanning line laser */}
           {isHolding && phase === 'scanning' && (
             <div className="absolute inset-4 rounded-full overflow-hidden pointer-events-none">
-              <div className="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-pink-400 to-transparent fingerprint-scan-line" />
+              <div className="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#f7e7ce] to-transparent fingerprint-scan-line" />
             </div>
           )}
 
@@ -179,7 +179,7 @@ export const FingerprintAuth: React.FC<FingerprintAuthProps> = ({ onAuthenticate
           ) : (
             <Fingerprint
               className={`w-20 h-20 transition-colors duration-300 ${
-                isHolding ? 'text-pink-300 fingerprint-glow' : 'text-pink-400/60'
+                isHolding ? 'text-[#f7e7ce] fingerprint-glow' : 'text-[#d4af37]/60'
               }`}
             />
           )}
@@ -196,16 +196,16 @@ export const FingerprintAuth: React.FC<FingerprintAuthProps> = ({ onAuthenticate
           transition={{ duration: 0.3 }}
           className="mt-8 text-center z-10"
         >
-          <p className={`text-xl sm:text-2xl font-semibold tracking-wide ${
+          <p className={`text-xl sm:text-2xl font-serif-luxury font-semibold tracking-wide ${
             phase === 'verified'
-              ? 'text-emerald-300 glow-text-gold font-cursive text-3xl'
-              : 'text-pink-100'
+              ? 'text-emerald-300 text-3xl'
+              : 'text-[#f7e7ce]'
           }`}>
             {statusText}
           </p>
 
           {phase === 'scanning' && (
-            <p className="text-xs font-code text-pink-300/80 mt-2 font-bold">
+            <p className="text-xs font-mono text-[#d4af37] mt-2 font-bold">
               {Math.floor(progress)}% AUTHENTICATED
             </p>
           )}
@@ -222,11 +222,11 @@ export const FingerprintAuth: React.FC<FingerprintAuthProps> = ({ onAuthenticate
         >
           <button
             onClick={handleContinue}
-            className="glass-button-romantic px-8 py-4 rounded-full text-white font-semibold text-lg flex items-center gap-3 shadow-[0_0_40px_rgba(236,72,153,0.6)] hover:scale-105 active:scale-95 transition-all"
+            className="px-8 py-4 rounded-full bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#b76e79] text-[#0f051d] font-semibold text-lg font-serif-luxury flex items-center gap-3 shadow-[0_0_40px_rgba(212,175,55,0.6)] hover:scale-105 active:scale-95 transition-all cursor-pointer"
           >
-            <Sparkles className="w-5 h-5 text-amber-300 animate-spin" style={{ animationDuration: '6s' }} />
+            <Sparkles className="w-5 h-5 text-[#0f051d] animate-spin" style={{ animationDuration: '6s' }} />
             <span>Enter RelationshipOS</span>
-            <ArrowRight className="w-5 h-5 text-pink-300" />
+            <ArrowRight className="w-5 h-5 text-[#0f051d]" />
           </button>
         </motion.div>
       )}
@@ -236,7 +236,7 @@ export const FingerprintAuth: React.FC<FingerprintAuthProps> = ({ onAuthenticate
         <motion.p
           animate={{ opacity: [0.4, 0.9, 0.4] }}
           transition={{ repeat: Infinity, duration: 2 }}
-          className="mt-6 text-xs font-code text-pink-300/60 z-10"
+          className="mt-6 text-xs font-mono text-[#f7e7ce]/70 z-10"
         >
           Press and hold the glowing sensor for 3s ☝️
         </motion.p>
@@ -244,3 +244,5 @@ export const FingerprintAuth: React.FC<FingerprintAuthProps> = ({ onAuthenticate
     </div>
   );
 };
+
+export default FingerprintAuth;

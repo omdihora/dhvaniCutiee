@@ -113,29 +113,29 @@ export const TerminalBoot: React.FC<TerminalBootProps> = ({ onComplete }) => {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center p-4 sm:p-6 relative overflow-hidden my-auto">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center p-4 sm:p-6 relative overflow-hidden my-auto bg-[#0f051d]">
       {/* Aurora backdrop */}
-      <div className="absolute w-[500px] h-[500px] bg-pink-500/10 rounded-full blur-[140px] pointer-events-none animate-aurora top-1/4 left-1/4" />
+      <div className="absolute w-[500px] h-[500px] bg-[#d4af37]/10 rounded-full blur-[140px] pointer-events-none animate-aurora top-1/4 left-1/4" />
 
       {/* Terminal Container */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6 }}
-        className="w-full max-w-2xl glass-card-apple rounded-[32px] overflow-hidden shadow-[0_20px_60px_rgba(236,72,153,0.25)] border border-pink-300/30 relative z-10 font-code"
+        className="w-full max-w-2xl glass-card-luxury rounded-[32px] overflow-hidden shadow-[0_20px_60px_rgba(212,175,55,0.2)] border border-[#f7e7ce]/30 relative z-10 font-mono"
       >
         {/* Header */}
-        <div className="bg-[#170924]/80 backdrop-blur-xl px-5 py-4 border-b border-pink-300/20 flex items-center justify-between">
+        <div className="bg-[#0f051d]/90 backdrop-blur-xl px-5 py-4 border-b border-[#f7e7ce]/20 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-3.5 h-3.5 rounded-full bg-rose-400/90 shadow-[0_0_8px_rgba(244,63,94,0.6)]" />
             <div className="w-3.5 h-3.5 rounded-full bg-amber-300/90 shadow-[0_0_8px_rgba(251,191,36,0.6)]" />
             <div className="w-3.5 h-3.5 rounded-full bg-emerald-400/90 shadow-[0_0_8px_rgba(52,211,153,0.6)]" />
           </div>
-          <div className="text-xs text-pink-200/90 font-mono tracking-widest uppercase flex items-center gap-2">
-            <Terminal className="w-3.5 h-3.5 text-pink-300" />
+          <div className="text-xs text-[#f7e7ce] font-mono tracking-widest uppercase flex items-center gap-2">
+            <Terminal className="w-3.5 h-3.5 text-[#d4af37]" />
             PAGE 2 // relationship_os_v3.0.sh
           </div>
-          <div className="text-xs text-pink-300/50 font-mono">bash</div>
+          <div className="text-xs text-[#d4af37] font-mono">bash</div>
         </div>
 
         {/* Terminal Content */}
@@ -150,11 +150,11 @@ export const TerminalBoot: React.FC<TerminalBootProps> = ({ onComplete }) => {
                   isDhvani
                     ? 'text-emerald-300 font-semibold text-base sm:text-lg drop-shadow-sm'
                     : isSuccess
-                    ? 'text-pink-300 font-bold text-base sm:text-lg glow-text-blush'
+                    ? 'text-[#f7e7ce] font-bold text-base sm:text-lg glow-text-gold'
                     : 'text-pink-100/80'
                 }`}
               >
-                <span className="text-rose-400 select-none font-bold">$</span>
+                <span className="text-[#d4af37] select-none font-bold">$</span>
                 <span>{log}</span>
               </div>
             );
@@ -163,22 +163,22 @@ export const TerminalBoot: React.FC<TerminalBootProps> = ({ onComplete }) => {
           {/* Active typing line */}
           {currentLine && (
             <div className="flex items-start gap-3 text-pink-200">
-              <span className="text-rose-400 select-none font-bold">$</span>
+              <span className="text-[#d4af37] select-none font-bold">$</span>
               <span>{currentLine}</span>
-              <span className="inline-block w-2.5 h-5 bg-pink-300 animate-pulse ml-0.5" />
+              <span className="inline-block w-2.5 h-5 bg-[#f7e7ce] animate-pulse ml-0.5" />
             </div>
           )}
 
           {/* Loading Progress Bar */}
           {showProgress && progress <= 100 && (
             <div className="my-4 space-y-2">
-              <div className="flex justify-between text-xs text-pink-200/80 font-mono">
+              <div className="flex justify-between text-xs text-[#f7e7ce] font-mono">
                 <span>[MEMORY_INDEXING]</span>
-                <span className="font-bold text-pink-300">{progress}%</span>
+                <span className="font-bold text-[#d4af37]">{progress}%</span>
               </div>
-              <div className="w-full h-3 bg-black/40 rounded-full overflow-hidden p-0.5 border border-pink-300/30">
+              <div className="w-full h-3 bg-black/40 rounded-full overflow-hidden p-0.5 border border-[#f7e7ce]/30">
                 <motion.div
-                  className="h-full bg-gradient-to-r from-pink-400 via-rose-300 to-purple-400 rounded-full shadow-[0_0_15px_rgba(248,200,220,0.8)]"
+                  className="h-full bg-gradient-to-r from-[#d4af37] via-[#f7e7ce] to-[#b76e79] rounded-full shadow-[0_0_15px_rgba(212,175,55,0.8)]"
                   style={{ width: `${progress}%` }}
                 />
               </div>
@@ -190,15 +190,15 @@ export const TerminalBoot: React.FC<TerminalBootProps> = ({ onComplete }) => {
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              className="pt-6 flex justify-center border-t border-pink-300/20"
+              className="pt-6 flex justify-center border-t border-[#f7e7ce]/20"
             >
               <button
                 onClick={handleNext}
-                className="glass-button-romantic px-8 py-3.5 rounded-full text-white font-medium text-base flex items-center gap-3 shadow-[0_0_30px_rgba(236,72,153,0.5)] hover:scale-105 active:scale-95 transition-all"
+                className="px-8 py-3.5 rounded-full bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#b76e79] text-[#0f051d] font-semibold font-serif-luxury text-base flex items-center gap-3 shadow-[0_0_30px_rgba(212,175,55,0.5)] hover:scale-105 active:scale-95 transition-all cursor-pointer"
               >
-                <Sparkles className="w-4 h-4 text-amber-300 animate-spin" style={{ animationDuration: '6s' }} />
+                <Sparkles className="w-4 h-4 text-[#0f051d] animate-spin" style={{ animationDuration: '6s' }} />
                 <span>Continue to Welcome Page</span>
-                <ArrowRight className="w-4 h-4 text-pink-300" />
+                <ArrowRight className="w-4 h-4 text-[#0f051d]" />
               </button>
             </motion.div>
           )}
@@ -207,3 +207,5 @@ export const TerminalBoot: React.FC<TerminalBootProps> = ({ onComplete }) => {
     </div>
   );
 };
+
+export default TerminalBoot;

@@ -4,8 +4,6 @@ import confetti from 'canvas-confetti';
 import { soundEngine } from '../utils/audio';
 import { AnimatedBouquet } from './AnimatedBouquet';
 
-// ✨ Page: Girlfriend's Day Celebration — August 1st Special Surprise!
-
 interface GirlfriendDayProps {
   onNext: () => void;
 }
@@ -60,7 +58,7 @@ export const GirlfriendDay: React.FC<GirlfriendDayProps> = ({ onNext }) => {
         particleCount: 100,
         spread: 120,
         origin: { y: 0.3 },
-        colors: ['#fadadd', '#f8c8dc', '#ec4899', '#d8b4fe', '#fbbf24', '#ffffff'],
+        colors: ['#f7e7ce', '#fadadd', '#f8c8dc', '#ec4899', '#d4af37', '#ffffff'],
       });
     };
 
@@ -102,13 +100,13 @@ export const GirlfriendDay: React.FC<GirlfriendDayProps> = ({ onNext }) => {
       particleCount: 150,
       spread: 100,
       origin: { y: 0.5 },
-      colors: ['#fadadd', '#f8c8dc', '#fbbf24', '#ec4899'],
+      colors: ['#f7e7ce', '#fadadd', '#d4af37', '#ec4899'],
     });
     setTimeout(() => setPhase('heartwall'), 4000);
   };
 
   // Heart wall positions
-  const getHeartPosition = (index: number, total: number) => {
+  const getHeartPosition = (index: number) => {
     const heartPoints: [number, number][] = [
       [50, 75],
       [30, 50], [70, 50],
@@ -123,10 +121,12 @@ export const GirlfriendDay: React.FC<GirlfriendDayProps> = ({ onNext }) => {
   return (
     <section
       ref={containerRef}
-      className="min-h-screen w-full relative overflow-hidden overflow-y-auto"
-      style={{ background: 'linear-gradient(180deg, #1a0a2e 0%, #2d1045 30%, #1a0a2e 100%)' }}
+      className="min-h-screen w-full relative overflow-hidden overflow-y-auto bg-[#0f051d]"
     >
-      {/* Falling petals throughout */}
+      {/* Background Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0f051d] via-[#2d0a10] to-[#0f051d] pointer-events-none" />
+
+      {/* Falling Petals Throughout */}
       {Array.from({ length: 30 }, (_, i) => (
         <div
           key={`petal-${i}`}
@@ -140,16 +140,16 @@ export const GirlfriendDay: React.FC<GirlfriendDayProps> = ({ onNext }) => {
           }}
         >
           <div
-            className="w-2.5 h-3.5 rounded-full opacity-60"
+            className="w-3 h-4 rounded-full opacity-60 filter blur-[0.2px]"
             style={{
-              background: ['#fadadd', '#f8c8dc', '#ffd6e8', '#e6d5ff'][i % 4],
+              background: ['#f7e7ce', '#fadadd', '#f8c8dc', '#b76e79'][i % 4],
               transform: `rotate(${Math.random() * 360}deg)`,
             }}
           />
         </div>
       ))}
 
-      {/* Floating butterflies */}
+      {/* Floating Butterflies */}
       {[0, 1, 2, 3].map(i => (
         <motion.div
           key={`gd-butterfly-${i}`}
@@ -158,7 +158,7 @@ export const GirlfriendDay: React.FC<GirlfriendDayProps> = ({ onNext }) => {
             y: [0, -40, -80, -30, 0],
           }}
           transition={{ duration: 15 + i * 2, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute pointer-events-none text-lg sm:text-xl"
+          className="absolute pointer-events-none text-xl sm:text-2xl filter drop-shadow-[0_0_12px_rgba(212,175,55,0.8)]"
           style={{ left: `${15 + i * 20}%`, top: `${20 + i * 15}%`, zIndex: 6 }}
         >
           <span className="animate-butterfly-wings inline-block">🦋</span>
@@ -183,7 +183,7 @@ export const GirlfriendDay: React.FC<GirlfriendDayProps> = ({ onNext }) => {
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: i * 0.12, type: 'spring', stiffness: 200 }}
-                className="absolute text-2xl sm:text-4xl"
+                className="absolute text-2xl sm:text-4xl filter drop-shadow-[0_0_10px_rgba(212,175,55,0.6)]"
                 style={{
                   left: `${10 + (i * 17) % 80}%`,
                   top: `${10 + (i * 23) % 75}%`,
@@ -197,7 +197,7 @@ export const GirlfriendDay: React.FC<GirlfriendDayProps> = ({ onNext }) => {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.8, duration: 1, type: 'spring' }}
-              className="font-display text-4xl sm:text-6xl md:text-7xl font-bold text-white text-center glow-text-blush relative z-10 px-4"
+              className="font-serif-luxury text-4xl sm:text-6xl md:text-7xl font-bold text-white text-center glow-text-gold relative z-10 px-4"
             >
               Happy Girlfriend's Day ❤️
             </motion.h1>
@@ -217,25 +217,25 @@ export const GirlfriendDay: React.FC<GirlfriendDayProps> = ({ onNext }) => {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white text-center glow-text-blush mb-6"
+              className="font-serif-luxury text-3xl sm:text-4xl md:text-5xl font-bold text-white text-center glow-text-gold mb-6"
             >
               Happy Girlfriend's Day ❤️
             </motion.h2>
 
-            {/* Overwhelmed Comforting Note Card */}
+            {/* Comforting Note Card */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.8 }}
-              className="glass-card-romantic p-5 sm:p-6 max-w-xl text-center mb-8 shadow-xl"
+              className="glass-card-luxury p-5 sm:p-6 max-w-xl text-center mb-8 shadow-2xl border border-[#f7e7ce]/30"
             >
               <div className="text-3xl mb-2">🌸✨💕</div>
-              <p className="font-handwritten text-lg sm:text-xl text-pink-200 leading-relaxed">
+              <p className="font-handwritten text-lg sm:text-xl text-[#f7e7ce] leading-relaxed">
                 "I know seeing all of this might feel a little overwhelming right now, but every single line of code, every memory, and every petal here was created just to make you feel cherished, celebrated, and loved beyond measure. You deserve all the happiness in this universe ❤️"
               </p>
             </motion.div>
 
-            {/* Polaroid Photos Cards */}
+            {/* Polaroid Photo Cards inside Crystal Frames */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8 max-w-4xl w-full mb-8">
               {POLAROID_HERO_PHOTOS.map((photo, i) => (
                 <motion.div
@@ -243,7 +243,7 @@ export const GirlfriendDay: React.FC<GirlfriendDayProps> = ({ onNext }) => {
                   initial={{ opacity: 0, y: 40, rotate: photo.rotation * 2 }}
                   animate={{ opacity: 1, y: 0, rotate: photo.rotation }}
                   transition={{ delay: 0.6 + i * 0.3, duration: 0.8, type: 'spring', stiffness: 120 }}
-                  className="polaroid-frame p-3 sm:p-4 w-72 sm:w-80 shadow-2xl relative"
+                  className="polaroid-frame p-3 sm:p-4 w-72 sm:w-80 shadow-2xl relative border-2 border-[#f7e7ce]/40"
                 >
                   <div className="overflow-hidden rounded-md aspect-[4/3] mb-3">
                     <img
@@ -253,10 +253,10 @@ export const GirlfriendDay: React.FC<GirlfriendDayProps> = ({ onNext }) => {
                     />
                   </div>
                   <div className="text-center">
-                    <h4 className="font-display text-base font-bold text-gray-800 mb-1">
+                    <h4 className="font-serif-luxury text-base font-bold text-gray-800 mb-1">
                       {photo.title}
                     </h4>
-                    <p className="font-handwritten text-sm text-rose-700 leading-snug">
+                    <p className="font-handwritten text-sm text-rose-800 leading-snug">
                       "{photo.note}"
                     </p>
                   </div>
@@ -269,7 +269,7 @@ export const GirlfriendDay: React.FC<GirlfriendDayProps> = ({ onNext }) => {
               animate={{ opacity: 1 }}
               transition={{ delay: 1.5 }}
               onClick={() => setPhase('messages')}
-              className="glass-button text-sm sm:text-base"
+              className="px-8 py-3.5 rounded-full bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#b76e79] text-[#0f051d] text-sm font-semibold shadow-[0_0_30px_rgba(212,175,55,0.4)] hover:scale-105 active:scale-95 transition-all font-serif-luxury cursor-pointer"
             >
               Read My Heart ❤️
             </motion.button>
@@ -292,9 +292,9 @@ export const GirlfriendDay: React.FC<GirlfriendDayProps> = ({ onNext }) => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, type: 'spring' }}
-                  className="glass-card-romantic p-4"
+                  className="glass-card-luxury p-4 border border-[#f7e7ce]/30"
                 >
-                  <p className="font-handwritten text-lg sm:text-xl text-pink-200">
+                  <p className="font-handwritten text-lg sm:text-xl text-[#f7e7ce]">
                     {msg}
                   </p>
                 </motion.div>
@@ -315,7 +315,7 @@ export const GirlfriendDay: React.FC<GirlfriendDayProps> = ({ onNext }) => {
             <motion.h3
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="font-display text-3xl sm:text-4xl font-bold text-white mb-2 text-center glow-text-blush"
+              className="font-serif-luxury text-3xl sm:text-4xl font-bold text-white mb-2 text-center glow-text-gold"
             >
               A Bouquet Just for You 💐
             </motion.h3>
@@ -324,7 +324,7 @@ export const GirlfriendDay: React.FC<GirlfriendDayProps> = ({ onNext }) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="font-handwritten text-lg sm:text-xl text-pink-200 text-center mb-2"
+              className="font-handwritten text-lg sm:text-xl text-[#f7e7ce] text-center mb-2"
             >
               "Every flower in this bouquet represents a reason I love you"
             </motion.p>
@@ -336,14 +336,14 @@ export const GirlfriendDay: React.FC<GirlfriendDayProps> = ({ onNext }) => {
               animate={{ opacity: 1 }}
               transition={{ delay: 2.2 }}
               onClick={() => setPhase('gift')}
-              className="glass-button mt-4 text-sm sm:text-base"
+              className="mt-4 px-8 py-3.5 rounded-full bg-gradient-to-r from-[#d4af37] to-[#b76e79] text-[#0f051d] text-sm font-semibold shadow-[0_0_30px_rgba(212,175,55,0.4)] hover:scale-105 active:scale-95 transition-all font-serif-luxury cursor-pointer"
             >
               Open Your Gift 🎁
             </motion.button>
           </motion.div>
         )}
 
-        {/* ─── PHASE: GIFT BOX ─── */}
+        {/* ─── PHASE: GIFT BOX WRAPPED WITH SILK RIBBONS ─── */}
         {phase === 'gift' && (
           <motion.div
             key="gift"
@@ -360,24 +360,24 @@ export const GirlfriendDay: React.FC<GirlfriendDayProps> = ({ onNext }) => {
                 style={{ perspective: '600px' }}
               >
                 <div
-                  className="w-40 h-40 sm:w-52 sm:h-52 rounded-2xl relative flex items-center justify-center"
+                  className="w-44 h-44 sm:w-56 sm:h-56 rounded-3xl relative flex items-center justify-center border-2 border-[#f7e7ce]/50"
                   style={{
-                    background: 'linear-gradient(135deg, #ec4899, #d946ef)',
-                    boxShadow: '0 20px 60px rgba(236, 72, 153, 0.4), inset 0 2px 4px rgba(255,255,255,0.3)',
+                    background: 'linear-gradient(135deg, #d4af37, #b76e79)',
+                    boxShadow: '0 20px 60px rgba(212, 175, 55, 0.4), inset 0 2px 4px rgba(255,255,255,0.4)',
                   }}
                 >
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-full h-4 bg-yellow-300/60 absolute" />
-                    <div className="w-4 h-full bg-yellow-300/60 absolute" />
+                    <div className="w-full h-5 bg-[#f7e7ce]/80 absolute" />
+                    <div className="w-5 h-full bg-[#f7e7ce]/80 absolute" />
                   </div>
 
-                  <div className="absolute -top-6 text-4xl sm:text-5xl">🎀</div>
+                  <div className="absolute -top-7 text-4xl sm:text-5xl filter drop-shadow-[0_0_10px_rgba(212,175,55,0.8)]">🎀</div>
 
                   {!giftOpened && (
                     <motion.p
                       animate={{ scale: [1, 1.05, 1] }}
                       transition={{ duration: 2, repeat: Infinity }}
-                      className="relative z-10 font-body text-white/90 text-sm font-semibold"
+                      className="relative z-10 font-serif-luxury text-[#0f051d] text-sm font-bold tracking-wide"
                     >
                       Tap to Open ✨
                     </motion.p>
@@ -391,14 +391,14 @@ export const GirlfriendDay: React.FC<GirlfriendDayProps> = ({ onNext }) => {
                     initial={{ opacity: 0, scale: 0.5, y: 50 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     transition={{ delay: 0.3, type: 'spring', stiffness: 150 }}
-                    className="glass-card-romantic p-6 text-center max-w-sm"
+                    className="glass-card-luxury p-6 text-center max-w-sm border-2 border-[#f7e7ce]/40"
                   >
                     <img
                       src="/gallery/photo7.jpg"
                       alt="Surprise memory"
                       className="w-full h-48 object-cover rounded-xl mb-4"
                     />
-                    <p className="font-handwritten text-lg text-pink-200">
+                    <p className="font-handwritten text-lg text-[#f7e7ce]">
                       "This is us — imperfect, beautiful, and completely in love. I wouldn't change a single thing about our story. ❤️"
                     </p>
                   </motion.div>
@@ -420,14 +420,14 @@ export const GirlfriendDay: React.FC<GirlfriendDayProps> = ({ onNext }) => {
             <motion.h3
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="font-display text-2xl sm:text-3xl font-bold text-white mb-8 text-center glow-text-blush"
+              className="font-serif-luxury text-2xl sm:text-3xl font-bold text-white mb-8 text-center glow-text-gold"
             >
               Our Wall of Memories 💕
             </motion.h3>
 
             <div className="relative w-80 h-80 sm:w-96 sm:h-96">
               {PHOTOS.map((src, i) => {
-                const pos = getHeartPosition(i, PHOTOS.length);
+                const pos = getHeartPosition(i);
                 const randomPos = { x: 20 + Math.random() * 60, y: 20 + Math.random() * 60 };
                 const targetPos = heartWallFormed ? pos : randomPos;
 
@@ -454,7 +454,7 @@ export const GirlfriendDay: React.FC<GirlfriendDayProps> = ({ onNext }) => {
                     }}
                     className="absolute w-16 h-20 sm:w-20 sm:h-24 -translate-x-1/2 -translate-y-1/2"
                   >
-                    <div className="polaroid-frame p-1 w-full h-full">
+                    <div className="polaroid-frame p-1 w-full h-full border border-[#f7e7ce]/40">
                       <img
                         src={src}
                         alt={`Memory ${i + 1}`}
@@ -472,7 +472,7 @@ export const GirlfriendDay: React.FC<GirlfriendDayProps> = ({ onNext }) => {
               animate={{ opacity: 1 }}
               transition={{ delay: 3 }}
               onClick={() => setPhase('finale')}
-              className="glass-button mt-8 text-sm"
+              className="mt-8 px-8 py-3.5 rounded-full bg-gradient-to-r from-[#d4af37] to-[#b76e79] text-[#0f051d] text-sm font-semibold shadow-[0_0_30px_rgba(212,175,55,0.4)] hover:scale-105 active:scale-95 transition-all font-serif-luxury cursor-pointer"
             >
               See the Finale ✨
             </motion.button>
@@ -493,10 +493,12 @@ export const GirlfriendDay: React.FC<GirlfriendDayProps> = ({ onNext }) => {
               transition={{ duration: 1.2, type: 'spring' }}
               className="text-center mb-8"
             >
-              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white glow-text-blush leading-tight">
+              <h2 className="font-serif-luxury text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white glow-text-gold leading-tight">
                 Happy Girlfriend's Day
                 <br />
-                <span className="text-pink-300">❤️ Dhvani</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f7e7ce] via-[#d4af37] to-[#fadadd]">
+                  ❤️ Dhvani
+                </span>
               </h2>
 
               <div className="flex justify-center gap-2 mt-4 text-2xl sm:text-3xl">
@@ -517,12 +519,12 @@ export const GirlfriendDay: React.FC<GirlfriendDayProps> = ({ onNext }) => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2, duration: 1 }}
-              className="glass-card-romantic p-6 sm:p-8 max-w-lg text-center"
+              className="glass-card-luxury p-6 sm:p-8 max-w-lg text-center border-2 border-[#f7e7ce]/40"
             >
-              <p className="font-handwritten text-lg sm:text-xl text-pink-200 leading-relaxed">
+              <p className="font-handwritten text-lg sm:text-xl text-[#f7e7ce] leading-relaxed">
                 "Thank you for being the most beautiful chapter of my life. No matter how many flowers bloom in this world, none could ever compare to you.
               </p>
-              <p className="font-handwritten text-lg sm:text-xl text-pink-200 mt-4">
+              <p className="font-handwritten text-lg sm:text-xl text-[#f7e7ce] mt-4">
                 Happy Girlfriend's Day ❤️
               </p>
               <p className="font-handwritten text-xl sm:text-2xl text-white mt-4 font-bold">
@@ -530,26 +532,12 @@ export const GirlfriendDay: React.FC<GirlfriendDayProps> = ({ onNext }) => {
               </p>
             </motion.div>
 
-            {/* Floating balloons */}
-            {['🎈', '🎈', '🎈', '🎈', '🎈'].map((b, i) => (
-              <motion.div
-                key={`balloon-${i}`}
-                initial={{ y: '100vh', opacity: 0 }}
-                animate={{ y: '-20vh', opacity: [0, 0.8, 0.8, 0.5, 0] }}
-                transition={{ delay: 1 + i * 0.5, duration: 8, ease: 'easeOut' }}
-                className="absolute text-3xl sm:text-4xl pointer-events-none"
-                style={{ left: `${15 + i * 18}%`, zIndex: 3 }}
-              >
-                {b}
-              </motion.div>
-            ))}
-
             <motion.button
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 4 }}
               onClick={() => { soundEngine.playPageSwitch(); onNext(); }}
-              className="glass-button mt-8 text-sm"
+              className="mt-8 px-8 py-3.5 rounded-full bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#b76e79] text-[#0f051d] text-sm font-semibold shadow-[0_0_30px_rgba(212,175,55,0.5)] hover:scale-105 active:scale-95 transition-all font-serif-luxury cursor-pointer"
             >
               Continue the Journey 💌
             </motion.button>
@@ -562,19 +550,15 @@ export const GirlfriendDay: React.FC<GirlfriendDayProps> = ({ onNext }) => {
         <motion.div
           key={`lantern-${i}`}
           initial={{ y: '100vh', opacity: 0 }}
-          animate={{ y: '-20vh', opacity: [0, 0.6, 0.6, 0.3, 0] }}
+          animate={{ y: '-20vh', opacity: [0, 0.6, 0.6, 0] }}
           transition={{
             delay: 2 + i * 3,
             duration: 15,
             repeat: Infinity,
             ease: 'easeOut',
           }}
-          className="absolute text-xl sm:text-2xl pointer-events-none"
-          style={{
-            left: `${10 + i * 15}%`,
-            zIndex: 4,
-            filter: 'drop-shadow(0 0 10px rgba(255,183,77,0.5))',
-          }}
+          className="absolute text-xl sm:text-2xl pointer-events-none z-10 filter drop-shadow-[0_0_12px_rgba(255,183,77,0.6)]"
+          style={{ left: `${10 + i * 15}%` }}
         >
           🏮
         </motion.div>
@@ -582,3 +566,5 @@ export const GirlfriendDay: React.FC<GirlfriendDayProps> = ({ onNext }) => {
     </section>
   );
 };
+
+export default GirlfriendDay;
