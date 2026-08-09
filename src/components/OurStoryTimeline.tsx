@@ -6,8 +6,8 @@ import { soundEngine } from '../utils/audio';
 const MILESTONES = [
   {
     icon: <Heart className="w-5 h-5 text-rose-400 fill-rose-400" />,
-    title: 'The Day We Met ❤️',
-    description: 'The universe finally got the assignment right and introduced us.',
+    title: 'The Day We Met (July 9th, 2026) ❤️',
+    description: 'On July 9th, 2026, the universe finally got the assignment right and introduced us.',
     color: 'rose',
   },
   {

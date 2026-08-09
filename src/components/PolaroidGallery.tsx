@@ -25,6 +25,15 @@ const PHOTOS: PhotoItem[] = [
   { id: 7, src: '/gallery/photo5.jpg', title: 'Blooming Together 🌸', caption: 'Like flowers blooming in spring, our love grows more beautiful with every passing day.', rotation: -1 },
   { id: 8, src: '/gallery/photo8.jpg', title: 'Golden Moments ✨', caption: 'These golden moments with you are the treasures I hold closest to my heart.', rotation: 3 },
   { id: 9, src: '/gallery/photo9.jpg', title: 'Forever & Always 💕', caption: 'With you, every ending is just a new beginning. Forever and always, my love.', rotation: -3 },
+  { id: 10, src: '/gallery/photo10.jpg', title: 'Festive Lights & Warmest Smiles ✨', caption: 'Wrapped in festive colors and glowing fairy lights, your smile lights up my whole world.', rotation: 2 },
+  { id: 11, src: '/gallery/photo11.jpg', title: 'Cozy Moments Under Golden Ribbons 🎗️', caption: 'Lean in close, forget the world. With you, every single ordinary moment turns into pure magic.', rotation: -4 },
+  { id: 12, src: '/gallery/photo12.jpg', title: 'Playful Glances & Sweet Quiet Love 💕', caption: 'The way you look at me with those beautiful eyes and glasses — my heart skips a beat every single time.', rotation: 3 },
+  { id: 13, src: '/gallery/photo13.jpg', title: 'Radiant Laughter & Pure Celebration 💖', caption: 'Big smiles, endless joy, and curls cascading like poetry. Being by your side is my happiest place on Earth.', rotation: -2 },
+  { id: 14, src: '/gallery/photo14.jpg', title: 'My Most Precious Gem 🌸', caption: 'Your playful, gorgeous smile framed by golden lights. You are the prettiest fairytale in my life.', rotation: 4 },
+  { id: 15, src: '/gallery/photo15.jpg', title: 'Resting Close & Holding Hands 💕', caption: 'Leaning against you at the table, wrapped in your pink linen shirt. Your warmth is my favorite comfort in the world.', rotation: -3 },
+  { id: 16, src: '/gallery/photo16.jpg', title: 'Starlit Evening Smiles ✨', caption: 'Under the open night sky, dressed in pink florals with your radiant smile and cute glasses shining brighter than the city lights.', rotation: 2 },
+  { id: 17, src: '/gallery/photo17.jpg', title: 'Hands on Chin & Endless Charm 💖', caption: 'Resting your chin on your hands with that adorable smile. Looking at you, I fall in love all over again.', rotation: -4 },
+  { id: 18, src: '/gallery/photo18.jpg', title: 'A Symphony of Colors & Love 🌈', caption: 'Standing beneath a canopy of vibrant streamers and twinkling lights. You are the bright color in my life every single day.', rotation: 3 },
 ];
 
 export const PolaroidGallery: React.FC<PolaroidGalleryProps> = ({ onNext }) => {
@@ -61,12 +70,12 @@ export const PolaroidGallery: React.FC<PolaroidGalleryProps> = ({ onNext }) => {
     setSelectedPhoto(PHOTOS[nextIdx]);
   };
 
-  // Fairy light positions (3 strings)
-  const strings = [
-    { y: '12%', sag: 20 },
-    { y: '38%', sag: 25 },
-    { y: '64%', sag: 18 },
-  ];
+  // Fairy light positions dynamically calculated based on photo count
+  const numStrings = Math.ceil(PHOTOS.length / 3);
+  const strings = Array.from({ length: numStrings }, (_, idx) => ({
+    y: `${8 + idx * 18}%`,
+    sag: 20 + (idx % 3) * 4,
+  }));
 
   return (
     <section
@@ -90,7 +99,7 @@ export const PolaroidGallery: React.FC<PolaroidGalleryProps> = ({ onNext }) => {
       </motion.div>
 
       {/* Fairy Light Strings with Polaroids */}
-      <div className="relative w-full" style={{ height: '75vh' }}>
+      <div className="relative w-full" style={{ minHeight: `${Math.max(80, numStrings * 28)}vh`, paddingBottom: '4rem' }}>
         {strings.map((string, sIdx) => {
           const photosOnString = PHOTOS.slice(sIdx * 3, sIdx * 3 + 3);
           return (

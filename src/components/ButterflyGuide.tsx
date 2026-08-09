@@ -21,7 +21,7 @@ export const ButterflyGuide: React.FC<ButterflyGuideProps> = ({ currentPageIndex
       7: "Walk down our memory timeline 📜",
       10: "Interactive questions handcrafted for you ❓",
       17: "Tap anywhere in the garden to plant new flowers 🌸",
-      19: "Royal Flower Celebration for Girlfriend's Day 💐",
+      19: "July 9th, 2026 — The Magical Day Our Story Began ✨ ❤️",
       20: "Look high above to see our World Heart ❤️",
       21: "Explore our Memory Museum Gallery 🖼️",
     };

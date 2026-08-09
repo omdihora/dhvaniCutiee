@@ -130,22 +130,26 @@ export const WorldCanvas3D: React.FC<WorldCanvas3DProps> = ({ currentPageIndex }
         case 2: // Hero Welcome
           targetPos.set(0, 8, 22);
           break;
-        case 7: // Our Story
+        case 7: // Our Story Milestone Tree
           targetPos.set(-15, 6, 12);
           targetLookAt.set(-10, 0, 0);
           break;
-        case 17: // Enchanted Garden
+        case 11: // Rainy Forest Apology
+          targetPos.set(-8, 5, 22);
+          targetLookAt.set(-2, 1, 0);
+          break;
+        case 18: // Enchanted Garden
           targetPos.set(10, 12, 15);
           targetLookAt.set(0, 0, -10);
           break;
-        case 19: // Girlfriend Day
+        case 20: // July 9th Met Day Royal Flower Celebration
           targetPos.set(0, 15, 20);
           break;
-        case 20: // Grand Finale - High Altitude World Heart Reveal
+        case 21: // Grand Finale - High Altitude World Heart Reveal
           targetPos.set(0, 45, 30);
           targetLookAt.set(0, -10, 0);
           break;
-        case 21: // Gallery
+        case 22: // Memory Forest Museum Gallery
           targetPos.set(18, 10, 18);
           break;
         default:
