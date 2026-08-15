@@ -42,12 +42,14 @@ interface NavigationHeaderProps {
   currentPageIndex: number;
   onNavigate: (pageIndex: number) => void;
   onOpenSecretHint: () => void;
+  onOpenRecoveryRoom?: () => void;
 }
 
 export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
   currentPageIndex,
   onNavigate,
   onOpenSecretHint,
+  onOpenRecoveryRoom,
 }) => {
   const [isMuted, setIsMuted] = useState(soundEngine.getMuted());
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -117,6 +119,21 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
 
         {/* Action Controls */}
         <div className="flex items-center gap-2 sm:gap-3">
+          {/* Recovery Room Comfort Sanctuary Button */}
+          {onOpenRecoveryRoom && (
+            <button
+              onClick={() => {
+                soundEngine.playClick();
+                onOpenRecoveryRoom();
+              }}
+              className="glass-pill px-3 py-1.5 text-xs font-medium transition-all flex items-center gap-1.5 border border-rose-400/40 bg-rose-500/15 text-rose-200 hover:text-white hover:border-rose-400 shadow-[0_0_15px_rgba(244,63,94,0.25)] active:scale-95 animate-pulse"
+              title="Open Dhvani's Recovery Room"
+            >
+              <span>❤️</span>
+              <span className="font-mono font-bold hidden sm:inline">Recovery Room</span>
+            </button>
+          )}
+
           {/* Quick Quiz Jump Link */}
           <button
             onClick={() => handleJumpToPage(10)}
@@ -258,6 +275,36 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
                   <X className="w-5 h-5" />
                 </button>
               </div>
+
+              {/* Special Recovery Room Banner in Directory */}
+              {onOpenRecoveryRoom && (
+                <button
+                  onClick={() => {
+                    soundEngine.playClick();
+                    setIsMenuOpen(false);
+                    onOpenRecoveryRoom();
+                  }}
+                  className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-gradient-to-r from-rose-500/25 via-amber-500/15 to-purple-500/20 border-2 border-rose-400/50 hover:border-rose-300 text-left transition-all shadow-[0_0_25px_rgba(244,63,94,0.25)] group"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="text-3xl group-hover:scale-110 transition-transform">❤️</span>
+                    <div>
+                      <div className="text-[10px] font-mono text-rose-300 font-bold tracking-wider uppercase">
+                        SPECIAL COZY HAVEN
+                      </div>
+                      <div className="text-sm font-semibold text-white font-serif-luxury">
+                        Dhvani's Recovery Room
+                      </div>
+                      <div className="text-[11px] text-rose-200/70 font-light">
+                        Calm, peaceful comfort virtual room for fever rest
+                      </div>
+                    </div>
+                  </div>
+                  <span className="px-3 py-1 rounded-full bg-rose-500/30 border border-rose-300/50 text-[11px] font-mono font-bold text-white">
+                    Enter ✨
+                  </span>
+                </button>
+              )}
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
                 {PAGES_LIST.map((page, idx) => {

@@ -6,6 +6,7 @@ import { soundEngine } from '../utils/audio';
 interface HeroWelcomeProps {
   onStartQuiz: () => void;
   onOpenGallery?: () => void;
+  onOpenRecoveryRoom?: () => void;
 }
 
 interface NavItem {
@@ -14,7 +15,7 @@ interface NavItem {
   action?: () => void;
 }
 
-export const HeroWelcome: React.FC<HeroWelcomeProps> = ({ onStartQuiz, onOpenGallery }) => {
+export const HeroWelcome: React.FC<HeroWelcomeProps> = ({ onStartQuiz, onOpenGallery, onOpenRecoveryRoom }) => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [expandedMobileCategory, setExpandedMobileCategory] = useState<string | null>(null);
@@ -56,6 +57,11 @@ export const HeroWelcome: React.FC<HeroWelcomeProps> = ({ onStartQuiz, onOpenGal
     else onStartQuiz();
   };
 
+  const handleRecovery = () => {
+    soundEngine.playPageSwitch();
+    if (onOpenRecoveryRoom) onOpenRecoveryRoom();
+  };
+
   const navItems: NavItem[] = [
     {
       title: 'Memories',
@@ -72,6 +78,7 @@ export const HeroWelcome: React.FC<HeroWelcomeProps> = ({ onStartQuiz, onOpenGal
         { label: 'Love DNA Scanner', action: handleStart },
         { label: 'LoveGPT Chatbot', action: handleStart },
         { label: 'Enchanted Garden 🌸', action: handleStart },
+        ...(onOpenRecoveryRoom ? [{ label: "Dhvani's Recovery Room ❤️", action: handleRecovery }] : []),
       ],
     },
     {
@@ -86,6 +93,14 @@ export const HeroWelcome: React.FC<HeroWelcomeProps> = ({ onStartQuiz, onOpenGal
       title: 'Our Gallery 🖼️',
       action: handleGallery,
     },
+    ...(onOpenRecoveryRoom
+      ? [
+          {
+            title: 'Recovery Room ❤️',
+            action: handleRecovery,
+          },
+        ]
+      : []),
   ];
 
   return (

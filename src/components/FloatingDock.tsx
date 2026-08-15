@@ -10,6 +10,7 @@ interface FloatingDockProps {
   onToggleViewMode: (mode: 'cinema' | 'bento') => void;
   onNavigate: (index: number) => void;
   onOpenSecretHint: () => void;
+  onOpenRecoveryRoom?: () => void;
 }
 
 export const FloatingDock: React.FC<FloatingDockProps> = ({
@@ -17,6 +18,7 @@ export const FloatingDock: React.FC<FloatingDockProps> = ({
   onToggleViewMode,
   onNavigate,
   onOpenSecretHint,
+  onOpenRecoveryRoom,
 }) => {
   const [isMuted, setIsMuted] = useState(soundEngine.getMuted());
 
@@ -70,6 +72,21 @@ export const FloatingDock: React.FC<FloatingDockProps> = ({
 
         <div className="w-px h-5 bg-white/20" />
 
+        {/* Dhvani's Recovery Room Link */}
+        {onOpenRecoveryRoom && (
+          <button
+            onClick={() => {
+              soundEngine.playClick();
+              onOpenRecoveryRoom();
+            }}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono font-semibold text-rose-200 border border-rose-400/40 bg-rose-500/15 hover:bg-rose-500/30 transition-all shadow-[0_0_15px_rgba(244,63,94,0.3)] active:scale-95 animate-pulse"
+            title="Dhvani's Recovery Room (Cozy Care Sanctuary)"
+          >
+            <span>❤️</span>
+            <span className="font-bold">Recovery</span>
+          </button>
+        )}
+
         {/* July 9th Met Day Special Link */}
         <button
           onClick={() => {
@@ -81,7 +98,7 @@ export const FloatingDock: React.FC<FloatingDockProps> = ({
           title="July 9th Met Day Special"
         >
           <Star className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
-          <span className="font-bold">July 9th</span>
+          <span className="font-bold hidden sm:inline">July 9th</span>
         </button>
 
         {/* Interactive Quiz Link */}

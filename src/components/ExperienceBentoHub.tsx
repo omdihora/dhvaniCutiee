@@ -8,6 +8,7 @@ interface ExperienceBentoHubProps {
   currentPageIndex: number;
   onSelectChapter: (index: number) => void;
   onCloseHub: () => void;
+  onOpenRecoveryRoom?: () => void;
 }
 
 const CATEGORIES = [
@@ -23,6 +24,7 @@ export const ExperienceBentoHub: React.FC<ExperienceBentoHubProps> = ({
   currentPageIndex,
   onSelectChapter,
   onCloseHub,
+  onOpenRecoveryRoom,
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -56,7 +58,7 @@ export const ExperienceBentoHub: React.FC<ExperienceBentoHubProps> = ({
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center space-y-3 mb-10"
+        className="text-center space-y-3 mb-8"
       >
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full ribbon-badge text-amber-200 text-xs font-mono border border-amber-400/30 shadow-[0_0_20px_rgba(212,175,55,0.2)]">
           <Grid className="w-3.5 h-3.5 text-amber-300" />
@@ -71,6 +73,45 @@ export const ExperienceBentoHub: React.FC<ExperienceBentoHubProps> = ({
           22 handcrafted interactive chapters. Tap any card to launch its 3D environment instantly.
         </p>
       </motion.div>
+
+      {/* Featured Special: Dhvani's Recovery Room Banner */}
+      {onOpenRecoveryRoom && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          whileHover={{ y: -4, scale: 1.01 }}
+          onClick={() => {
+            soundEngine.playClick();
+            onCloseHub();
+            onOpenRecoveryRoom();
+          }}
+          className="w-full max-w-4xl mb-8 p-5 sm:p-6 rounded-3xl cursor-pointer bg-gradient-to-r from-[#2a1334]/95 via-[#1d0d2b]/95 to-[#24102c]/95 border-2 border-rose-400/50 hover:border-rose-300 shadow-[0_0_40px_rgba(244,63,94,0.3)] transition-all flex flex-col sm:flex-row items-center justify-between gap-4 group"
+        >
+          <div className="flex items-center gap-4 text-center sm:text-left">
+            <div className="w-14 h-14 rounded-2xl bg-rose-500/20 border border-rose-300/40 flex items-center justify-center text-3xl group-hover:scale-110 transition-transform">
+              ❤️
+            </div>
+            <div>
+              <div className="flex items-center justify-center sm:justify-start gap-2">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-rose-500/30 text-rose-200 font-bold uppercase">
+                  Special Comfort Sanctuary
+                </span>
+                <span className="text-amber-300 text-xs animate-pulse">✨ New</span>
+              </div>
+              <h2 className="text-lg sm:text-xl font-bold font-serif-luxury text-white mt-0.5">
+                Dhvani's Recovery Room ❤️
+              </h2>
+              <p className="text-xs text-rose-200/80 font-light mt-0.5">
+                Cozy bedroom at night with rain on window, virtual tea, warm soup, teddy hugs & peaceful resting mode.
+              </p>
+            </div>
+          </div>
+
+          <button className="px-6 py-2.5 rounded-full bg-gradient-to-r from-rose-500 to-amber-500 text-white font-mono text-xs font-bold shadow-[0_0_20px_rgba(244,63,94,0.5)] group-hover:scale-105 transition-transform whitespace-nowrap">
+            Enter Sanctuary ✨
+          </button>
+        </motion.div>
+      )}
 
       {/* Filter Category Tabs & Search Bar */}
       <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">

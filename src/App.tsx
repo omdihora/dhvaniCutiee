@@ -26,6 +26,9 @@ import { July9thSpecial } from './components/July9thSpecial';
 import { GrandFinale } from './components/GrandFinale';
 import { OurGallery } from './components/OurGallery';
 
+// Standalone Special Comfort Haven for Dhvani
+import { RecoveryRoom } from './components/RecoveryRoom';
+
 // 3D World Canvas, Bento Hub & Floating Dock
 import { WorldCanvas3D } from './components/WorldCanvas3D';
 import { ButterflyGuide } from './components/ButterflyGuide';
@@ -42,14 +45,35 @@ export function App() {
   const [currentPageIndex, setCurrentPageIndex] = useState<number>(0);
   const [viewMode, setViewMode] = useState<'cinema' | 'bento'>('cinema');
   const [isOpenHint, setIsOpenHint] = useState<boolean>(false);
+  const [isRecoveryRoomOpen, setIsRecoveryRoomOpen] = useState<boolean>(() => {
+    return window.location.hash.toLowerCase() === '#recovery';
+  });
 
   const handleNavigateToPage = (index: number) => {
     setCurrentPageIndex(index);
   };
 
+  // Hash listener for direct sharing / deep-linking into Recovery Room
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (window.location.hash.toLowerCase() === '#recovery') {
+        setIsRecoveryRoomOpen(true);
+      }
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
   // Keyboard navigation & view toggle (Escape key toggles Bento Hub)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (isRecoveryRoomOpen) {
+        if (e.key === 'Escape') {
+          setIsRecoveryRoomOpen(false);
+        }
+        return;
+      }
+
       if (e.key === 'Escape') {
         setViewMode((prev) => (prev === 'cinema' ? 'bento' : 'cinema'));
       } else if (viewMode === 'cinema') {
@@ -62,7 +86,7 @@ export function App() {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [viewMode]);
+  }, [viewMode, isRecoveryRoomOpen]);
 
   const renderCurrentPage = () => {
     switch (currentPageIndex) {
@@ -71,7 +95,13 @@ export function App() {
       case 1:
         return <TerminalBoot onComplete={() => handleNavigateToPage(2)} />;
       case 2:
-        return <HeroWelcome onStartQuiz={() => handleNavigateToPage(3)} onOpenGallery={() => handleNavigateToPage(22)} />;
+        return (
+          <HeroWelcome
+            onStartQuiz={() => handleNavigateToPage(3)}
+            onOpenGallery={() => handleNavigateToPage(22)}
+            onOpenRecoveryRoom={() => setIsRecoveryRoomOpen(true)}
+          />
+        );
       case 3:
         return <LoveEnvelope onNext={() => handleNavigateToPage(4)} />;
       case 4:
@@ -123,6 +153,16 @@ export function App() {
 
   const progressPercentage = ((currentPageIndex + 1) / 23) * 100;
 
+  // Render Standalone Recovery Room Experience
+  if (isRecoveryRoomOpen) {
+    return (
+      <div className="min-h-screen w-full relative bg-[#130d1e] text-slate-100 overflow-x-hidden select-none font-sans flex flex-col justify-between">
+        <HeartCursorTrail />
+        <RecoveryRoom onBackToMain={() => setIsRecoveryRoomOpen(false)} />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen w-full relative bg-[#0f051d] text-slate-100 overflow-x-hidden select-none font-sans flex flex-col justify-between">
       {/* Global Top Experience Progress Indicator Bar */}
@@ -153,6 +193,7 @@ export function App() {
           currentPageIndex={currentPageIndex}
           onNavigate={handleNavigateToPage}
           onOpenSecretHint={() => setIsOpenHint(true)}
+          onOpenRecoveryRoom={() => setIsRecoveryRoomOpen(true)}
         />
       )}
 
@@ -172,6 +213,7 @@ export function App() {
                 currentPageIndex={currentPageIndex}
                 onSelectChapter={handleNavigateToPage}
                 onCloseHub={() => setViewMode('cinema')}
+                onOpenRecoveryRoom={() => setIsRecoveryRoomOpen(true)}
               />
             </motion.div>
           ) : (
@@ -195,6 +237,7 @@ export function App() {
         onToggleViewMode={setViewMode}
         onNavigate={handleNavigateToPage}
         onOpenSecretHint={() => setIsOpenHint(true)}
+        onOpenRecoveryRoom={() => setIsRecoveryRoomOpen(true)}
       />
 
       {/* 8. Keyboard Secrets & Hints Modal */}
@@ -207,3 +250,4 @@ export function App() {
 }
 
 export default App;
+
