@@ -33,8 +33,8 @@ export const HeroWelcome: React.FC<HeroWelcomeProps> = ({ onStartQuiz, onOpenGal
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
 
-    const rx = ((y - centerY) / centerY) * -12;
-    const ry = ((x - centerX) / centerX) * 12;
+    const rx = ((y - centerY) / centerY) * -14;
+    const ry = ((x - centerX) / centerX) * 14;
 
     const glowX = (x / rect.width) * 100;
     const glowY = (y / rect.height) * 100;
@@ -58,7 +58,7 @@ export const HeroWelcome: React.FC<HeroWelcomeProps> = ({ onStartQuiz, onOpenGal
   };
 
   const handleRecovery = () => {
-    soundEngine.playPageSwitch();
+    soundEngine.playHeartbeat();
     if (onOpenRecoveryRoom) onOpenRecoveryRoom();
   };
 
@@ -104,55 +104,55 @@ export const HeroWelcome: React.FC<HeroWelcomeProps> = ({ onStartQuiz, onOpenGal
   ];
 
   return (
-    <section className="min-h-screen w-full overflow-hidden relative font-sans flex flex-col justify-between select-none bg-[#0f051d]">
-      {/* Background Video */}
+    <section className="min-h-screen w-full overflow-hidden relative font-sans flex flex-col justify-between select-none bg-[#090214]">
+      {/* Cinematic Background Video */}
       <video
         autoPlay
         loop
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover z-0 opacity-40 filter saturate-150 contrast-110"
+        className="absolute inset-0 w-full h-full object-cover z-0 opacity-40 filter saturate-150 contrast-115"
         src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260703_053131_1ec3dd1c-d627-44fb-ab20-6e1fce41b0d5.mp4"
       />
 
-      {/* Luxury Gradient Vignette Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0f051d]/90 via-[#0f051d]/60 to-[#0f051d]/95 z-0 pointer-events-none" />
+      {/* Luxury Gradient Vignette Overlay & Atmospheric Shimmer */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#090214]/90 via-[#090214]/65 to-[#090214]/95 z-0 pointer-events-none" />
 
-      {/* Floating Petals & Butterflies */}
-      {Array.from({ length: 15 }, (_, i) => (
+      {/* Floating Stardust Petals */}
+      {Array.from({ length: 16 }, (_, i) => (
         <div
           key={`hero-petal-${i}`}
           className="absolute pointer-events-none animate-petal-fall"
           style={{
-            left: `${(i * 7) % 95}%`,
+            left: `${(i * 6.5) % 96}%`,
             top: '-5%',
-            animationDelay: `${i * 0.9}s`,
+            animationDelay: `${i * 0.8}s`,
             animationDuration: `${12 + (i % 5) * 2}s`,
             zIndex: 2,
           }}
         >
           <div
-            className="w-3 h-4 rounded-full opacity-60 filter blur-[0.3px]"
+            className="w-3.5 h-4.5 rounded-full opacity-70 filter blur-[0.2px] shadow-[0_0_10px_rgba(255,215,0,0.5)]"
             style={{
-              background: ['#f7e7ce', '#fadadd', '#f8c8dc', '#b76e79'][i % 4],
+              background: ['#ffd700', '#f7e7ce', '#ff2e8c', '#fadadd'][i % 4],
               transform: `rotate(${i * 45}deg)`,
             }}
           />
         </div>
       ))}
 
-      {/* Top Floating Glass Navigation */}
-      <nav className="w-full px-5 sm:px-6 md:px-12 lg:px-16 py-4 sm:py-5 flex items-center justify-between z-20 relative backdrop-blur-xl bg-[#0f051d]/60 border-b border-[#f7e7ce]/15">
+      {/* Top Floating Holographic Glass Navigation */}
+      <nav className="w-full px-4 sm:px-6 md:px-12 lg:px-16 py-3.5 sm:py-4 flex items-center justify-between z-20 relative backdrop-blur-2xl bg-[#090214]/75 border-b border-amber-400/25">
         {/* Logo */}
         <div className="flex items-center gap-3 cursor-pointer group" onClick={handleStart}>
-          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#d4af37] to-[#b76e79] p-0.5 shadow-[0_0_15px_rgba(212,175,55,0.4)] group-hover:scale-105 transition-all">
-            <div className="w-full h-full rounded-full bg-[#0f051d] flex items-center justify-center">
+          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-400 via-rose-400 to-pink-500 p-0.5 shadow-[0_0_20px_rgba(212,175,55,0.6)] group-hover:scale-110 transition-all">
+            <div className="w-full h-full rounded-full bg-[#090214] flex items-center justify-center">
               <span className="text-sm">👑</span>
             </div>
           </div>
           <span className="text-white text-lg sm:text-xl font-serif-luxury font-medium tracking-wide flex items-center gap-1.5">
-            Relationship<span className="text-[#f7e7ce] font-bold">OS</span>
-            <span className="text-rose-400">❤️</span>
+            Relationship<span className="text-amber-300 font-bold">OS</span>
+            <span className="text-rose-400 animate-pulse">❤️</span>
           </span>
         </div>
 
@@ -169,12 +169,12 @@ export const HeroWelcome: React.FC<HeroWelcomeProps> = ({ onStartQuiz, onOpenGal
                 onClick={() => {
                   if (item.action) item.action();
                 }}
-                className="text-pink-100/90 hover:text-[#f7e7ce] text-sm font-serif-luxury tracking-wide transition-colors flex items-center gap-1.5 py-1 cursor-pointer"
+                className="text-pink-100/90 hover:text-amber-300 text-sm font-serif-luxury tracking-wide transition-colors flex items-center gap-1.5 py-1 cursor-pointer"
               >
                 <span>{item.title}</span>
                 {item.items && (
                   <ChevronDown
-                    className={`w-3.5 h-3.5 text-[#d4af37] transition-transform duration-200 ${
+                    className={`w-3.5 h-3.5 text-amber-400 transition-transform duration-200 ${
                       activeDropdown === item.title ? 'rotate-180' : ''
                     }`}
                   />
@@ -183,7 +183,7 @@ export const HeroWelcome: React.FC<HeroWelcomeProps> = ({ onStartQuiz, onOpenGal
 
               {/* Dropdown Menu */}
               {item.items && activeDropdown === item.title && (
-                <div className="!absolute top-full left-0 glass-card-luxury bg-[#0f051d]/95 rounded-2xl py-3 px-2 min-w-[190px] shadow-2xl z-30 mt-2 border border-[#f7e7ce]/30 backdrop-blur-2xl">
+                <div className="!absolute top-full left-0 glass-card-3d bg-[#0d031c]/95 rounded-2xl py-3 px-2 min-w-[190px] shadow-2xl z-30 mt-2 border border-amber-400/35 backdrop-blur-2xl">
                   {item.items.map((subItem) => (
                     <a
                       key={subItem.label}
@@ -192,7 +192,7 @@ export const HeroWelcome: React.FC<HeroWelcomeProps> = ({ onStartQuiz, onOpenGal
                         if (subItem.action) subItem.action();
                         else handleStart();
                       }}
-                      className="text-slate-200 hover:text-[#f7e7ce] hover:bg-white/10 text-xs font-serif-luxury rounded-xl block px-3.5 py-2.5 transition-colors cursor-pointer"
+                      className="text-slate-200 hover:text-amber-200 hover:bg-white/10 text-xs font-serif-luxury rounded-xl block px-3.5 py-2.5 transition-colors cursor-pointer"
                     >
                       {subItem.label}
                     </a>
@@ -207,17 +207,17 @@ export const HeroWelcome: React.FC<HeroWelcomeProps> = ({ onStartQuiz, onOpenGal
         <div className="hidden md:flex items-center gap-4">
           <button
             onClick={handleStart}
-            className="text-pink-100/90 hover:text-[#f7e7ce] text-xs font-serif-luxury font-medium transition-colors cursor-pointer flex items-center gap-1.5"
+            className="text-pink-100/90 hover:text-amber-300 text-xs font-serif-luxury font-medium transition-colors cursor-pointer flex items-center gap-1.5"
           >
             <span>Welcome Dhvani</span>
-            <Heart className="w-3.5 h-3.5 text-rose-400 fill-rose-400" />
+            <Heart className="w-3.5 h-3.5 text-rose-400 fill-rose-400 animate-pulse" />
           </button>
 
           <button
             onClick={handleGallery}
-            className="glass-pill rounded-full px-5 py-2 text-[#f7e7ce] text-xs font-serif-luxury font-medium hover:bg-white/15 transition-all cursor-pointer flex items-center gap-2 border border-[#f7e7ce]/30 shadow-[0_0_20px_rgba(212,175,55,0.2)]"
+            className="glass-pill rounded-full px-5 py-2 text-amber-200 text-xs font-serif-luxury font-semibold hover:bg-white/15 transition-all cursor-pointer flex items-center gap-2 border border-amber-400/35 shadow-[0_0_20px_rgba(212,175,55,0.25)] hover:shadow-[0_0_30px_rgba(212,175,55,0.5)]"
           >
-            <ImageIcon className="w-4 h-4 text-[#d4af37]" />
+            <ImageIcon className="w-4 h-4 text-amber-400" />
             <span>Our Gallery 🖼️</span>
           </button>
         </div>
@@ -254,7 +254,7 @@ export const HeroWelcome: React.FC<HeroWelcomeProps> = ({ onStartQuiz, onOpenGal
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="md:hidden absolute top-16 left-4 right-4 bg-[#0f051d]/95 backdrop-blur-2xl rounded-2xl p-6 shadow-2xl z-30 border border-[#f7e7ce]/30"
+            className="md:hidden absolute top-16 left-4 right-4 bg-[#0d031c]/95 backdrop-blur-2xl rounded-2xl p-6 shadow-2xl z-30 border border-amber-400/35"
           >
             <div className="flex flex-col space-y-4">
               {navItems.map((item) => (
@@ -275,7 +275,7 @@ export const HeroWelcome: React.FC<HeroWelcomeProps> = ({ onStartQuiz, onOpenGal
                     <span>{item.title}</span>
                     {item.items && (
                       <ChevronDown
-                        className={`w-4 h-4 text-[#d4af37] transition-transform duration-200 ${
+                        className={`w-4 h-4 text-amber-400 transition-transform duration-200 ${
                           expandedMobileCategory === item.title ? 'rotate-180' : ''
                         }`}
                       />
@@ -283,7 +283,7 @@ export const HeroWelcome: React.FC<HeroWelcomeProps> = ({ onStartQuiz, onOpenGal
                   </button>
 
                   {item.items && expandedMobileCategory === item.title && (
-                    <div className="pl-4 space-y-2 border-l border-[#f7e7ce]/20 my-1">
+                    <div className="pl-4 space-y-2 border-l border-amber-400/20 my-1">
                       {item.items.map((sub) => (
                         <a
                           key={sub.label}
@@ -292,7 +292,7 @@ export const HeroWelcome: React.FC<HeroWelcomeProps> = ({ onStartQuiz, onOpenGal
                             if (sub.action) sub.action();
                             else handleStart();
                           }}
-                          className="block text-pink-200/80 hover:text-[#f7e7ce] text-xs py-1 cursor-pointer"
+                          className="block text-pink-200/80 hover:text-amber-200 text-xs py-1 cursor-pointer"
                         >
                           {sub.label}
                         </a>
@@ -302,7 +302,7 @@ export const HeroWelcome: React.FC<HeroWelcomeProps> = ({ onStartQuiz, onOpenGal
                 </div>
               ))}
 
-              <div className="pt-4 border-t border-[#f7e7ce]/20 flex flex-col space-y-3">
+              <div className="pt-4 border-t border-amber-400/20 flex flex-col space-y-3">
                 <button
                   onClick={() => {
                     setIsMobileMenuOpen(false);
@@ -318,9 +318,9 @@ export const HeroWelcome: React.FC<HeroWelcomeProps> = ({ onStartQuiz, onOpenGal
                     setIsMobileMenuOpen(false);
                     handleGallery();
                   }}
-                  className="w-full glass-pill rounded-full py-2.5 text-center text-[#f7e7ce] text-xs font-serif-luxury cursor-pointer flex items-center justify-center gap-2 border border-[#f7e7ce]/30"
+                  className="w-full glass-pill rounded-full py-2.5 text-center text-amber-200 text-xs font-serif-luxury cursor-pointer flex items-center justify-center gap-2 border border-amber-400/35"
                 >
-                  <ImageIcon className="w-4 h-4 text-[#d4af37]" />
+                  <ImageIcon className="w-4 h-4 text-amber-400" />
                   <span>Visit Our Gallery 🖼️</span>
                 </button>
               </div>
@@ -331,7 +331,7 @@ export const HeroWelcome: React.FC<HeroWelcomeProps> = ({ onStartQuiz, onOpenGal
 
       {/* Full-Screen Hero Main Content with 3D Tilt Card Centerpiece */}
       <div className="flex-1 flex flex-col items-center justify-center px-4 py-8 relative z-10">
-        <div className="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div className="max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
           
           {/* Left Column: Heading & Copy */}
           <motion.div
@@ -340,14 +340,14 @@ export const HeroWelcome: React.FC<HeroWelcomeProps> = ({ onStartQuiz, onOpenGal
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="text-center md:text-left space-y-6"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-pill border border-[#f7e7ce]/30 text-[#f7e7ce] text-xs font-mono">
-              <Sparkles className="w-3.5 h-3.5 text-[#d4af37]" />
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-pill border border-amber-400/35 text-amber-200 text-xs font-mono shadow-[0_0_15px_rgba(212,175,55,0.25)]">
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
               <span>HANDCRAFTED FOR DHVANI</span>
             </div>
 
-            <h1 className="text-[#fdfbf7] font-display text-4xl sm:text-5xl md:text-6xl font-extrabold leading-[1.1] tracking-tight">
+            <h1 className="text-white font-display text-4xl sm:text-5xl md:text-6xl font-extrabold leading-[1.1] tracking-tight">
               Bridging every <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f7e7ce] via-[#fadadd] to-[#d4af37]">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-rose-300 to-pink-500 drop-shadow-[0_0_30px_rgba(255,46,140,0.5)]">
                 distance.
               </span>
             </h1>
@@ -357,12 +357,12 @@ export const HeroWelcome: React.FC<HeroWelcomeProps> = ({ onStartQuiz, onOpenGal
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
-              className="font-handwritten text-xl sm:text-2xl text-[#f7e7ce] leading-relaxed"
+              className="font-serif-luxury italic text-xl sm:text-2xl text-amber-100/90 leading-relaxed font-light"
             >
               "Distance means so little when someone means so much. Handcrafted with all my love, Om ❤️"
             </motion.p>
 
-            <p className="text-pink-100/80 text-xs sm:text-sm leading-relaxed font-body max-w-md">
+            <p className="text-pink-100/80 text-xs sm:text-sm leading-relaxed font-outfit max-w-md">
               RelationshipOS unifies every memory, milestone, and message so we spend less energy on the miles and more on true togetherness.
             </p>
 
@@ -370,18 +370,18 @@ export const HeroWelcome: React.FC<HeroWelcomeProps> = ({ onStartQuiz, onOpenGal
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-2">
               <button
                 onClick={handleStart}
-                className="px-7 py-3.5 bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#b76e79] text-[#0f051d] text-sm font-semibold rounded-full hover:shadow-[0_0_30px_rgba(212,175,55,0.6)] transition-all active:scale-95 cursor-pointer flex items-center gap-2 font-serif-luxury"
+                className="px-8 py-3.5 bg-gradient-to-r from-amber-400 via-rose-400 to-pink-500 text-slate-950 text-sm font-bold rounded-full hover:shadow-[0_0_35px_rgba(212,175,55,0.7)] transition-all active:scale-95 cursor-pointer flex items-center gap-2 font-outfit"
               >
                 <span>Begin Our Journey ❤️</span>
-                <ArrowRight className="w-4 h-4 text-[#0f051d]" />
+                <ArrowRight className="w-4 h-4 text-slate-950" />
               </button>
 
               <button
                 onClick={handleGallery}
-                className="px-7 py-3.5 glass-button rounded-full text-[#f7e7ce] text-sm font-semibold hover:bg-white/15 transition-all active:scale-95 cursor-pointer flex items-center gap-2 border border-[#f7e7ce]/40 font-serif-luxury"
+                className="px-7 py-3.5 glass-card-3d rounded-full text-amber-200 text-sm font-semibold hover:bg-white/15 transition-all active:scale-95 cursor-pointer flex items-center gap-2 border border-amber-400/40 font-outfit"
               >
                 <span>Our Gallery 🖼️</span>
-                <Sparkles className="w-4 h-4 text-[#e5c158] animate-spin" style={{ animationDuration: '6s' }} />
+                <Sparkles className="w-4 h-4 text-amber-300 animate-spin" style={{ animationDuration: '6s' }} />
               </button>
             </div>
           </motion.div>
@@ -397,7 +397,7 @@ export const HeroWelcome: React.FC<HeroWelcomeProps> = ({ onStartQuiz, onOpenGal
               ref={cardRef}
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
-              className="relative w-72 sm:w-80 md:w-88 aspect-[3/4] rounded-3xl p-3 glass-card-luxury border-2 border-[#f7e7ce]/40 shadow-[0_30px_90px_rgba(212,175,55,0.25)] transition-transform duration-200 ease-out cursor-pointer group"
+              className="relative w-72 sm:w-80 md:w-88 aspect-[3/4] rounded-3xl p-3.5 glass-card-3d border-2 border-amber-400/40 shadow-[0_30px_90px_rgba(212,175,55,0.3)] transition-transform duration-200 ease-out cursor-pointer group"
               style={{
                 transform: `perspective(1000px) rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`,
               }}
@@ -405,9 +405,9 @@ export const HeroWelcome: React.FC<HeroWelcomeProps> = ({ onStartQuiz, onOpenGal
             >
               {/* Soft Lighting Reflection Overlay */}
               <div
-                className="absolute inset-0 rounded-3xl pointer-events-none opacity-40 group-hover:opacity-70 transition-opacity"
+                className="absolute inset-0 rounded-3xl pointer-events-none opacity-40 group-hover:opacity-75 transition-opacity"
                 style={{
-                  background: `radial-gradient(circle at ${tilt.glowX}% ${tilt.glowY}%, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 70%)`,
+                  background: `radial-gradient(circle at ${tilt.glowX}% ${tilt.glowY}%, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0) 70%)`,
                 }}
               />
 
@@ -420,8 +420,8 @@ export const HeroWelcome: React.FC<HeroWelcomeProps> = ({ onStartQuiz, onOpenGal
                 />
                 
                 {/* Floating handwritten caption over photo */}
-                <div className="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black/80 via-black/40 to-transparent text-center">
-                  <span className="font-handwritten text-lg text-[#f7e7ce] drop-shadow">
+                <div className="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black/85 via-black/45 to-transparent text-center">
+                  <span className="font-serif-luxury italic text-lg text-amber-200 drop-shadow">
                     "Our First Date Under Starlit Trees ✨"
                   </span>
                 </div>

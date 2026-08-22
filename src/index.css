@@ -1,19 +1,21 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════════════════════
-   ✨ DHVANI — Ultra-Attractive Romantic Design System (2026 Met-Day Edition)
-   Deep Nebula Amethyst, Celestial Neon Rose, Liquid Gold & Pearl Glass
+   ✨ DHVANI — Elysium 3D Cinematic Love Design System
+   Hollywood-Grade VFX, Liquid Gold Foil, Crystalline Holograms & Celestial Amethyst
    ═══════════════════════════════════════════════════════════════ */
 
 @layer base {
   :root {
-    /* ─── Typography ─── */
+    /* ─── Typography Suite ─── */
+    --font-cinzel: 'Cinzel Decorative', Georgia, serif;
     --font-display: 'Playfair Display', Georgia, serif;
     --font-serif-luxury: 'Cormorant Garamond', serif;
+    --font-outfit: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-body: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-mono-code: 'Fira Code', monospace;
 
-    /* ─── Vibrant Celestial & Luxury Palette ─── */
+    /* ─── Master VFX & Romance Palette ─── */
     --color-electric-rose: #ff2e8c;
     --color-neon-pink: #f43f5e;
     --color-soft-rose: #ff85a2;
@@ -29,27 +31,22 @@
 
     /* ─── Glowing Gradients ─── */
     --gradient-cosmic-hero: linear-gradient(135deg, #ff2e8c 0%, #a855f7 40%, #ffd700 100%);
-    --gradient-deep-midnight: linear-gradient(180deg, #090412 0%, #160829 40%, #240a34 80%, #090412 100%);
+    --gradient-deep-midnight: radial-gradient(circle at 50% 30%, #17072b 0%, #0d031c 50%, #06010d 100%);
     --gradient-gold-foil: linear-gradient(135deg, #fff3c4 0%, #ffd700 50%, #d4af37 100%);
     --gradient-rose-sunset: linear-gradient(135deg, #ff2e8c 0%, #ff85a2 50%, #f7e7ce 100%);
-    --gradient-glass-luxury: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 46, 140, 0.08), rgba(255, 215, 0, 0.05));
-    --gradient-bento-card: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(168, 85, 247, 0.08));
-
-    /* ─── Border Radius ─── */
-    --radius-sm: 14px;
-    --radius-md: 24px;
-    --radius-lg: 32px;
-    --radius-full: 9999px;
+    --gradient-glass-luxury: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 46, 140, 0.08), rgba(255, 215, 0, 0.06));
+    --gradient-holographic: linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 46, 140, 0.12) 40%, rgba(255, 215, 0, 0.1) 70%, rgba(168, 85, 247, 0.15) 100%);
   }
 
   * {
-    font-family: var(--font-body);
+    font-family: var(--font-outfit), var(--font-body);
     box-sizing: border-box;
   }
 
   body {
-    font-family: var(--font-body);
-    background: var(--gradient-deep-midnight);
+    font-family: var(--font-outfit), var(--font-body);
+    background: #080214;
+    background-image: var(--gradient-deep-midnight);
     color: var(--color-pearl-white);
     cursor: none;
     user-select: none;
@@ -60,34 +57,38 @@
     min-height: 100vh;
   }
 
-  /* Hide default cursor everywhere */
+  /* Hide default cursor everywhere for 3D cursor trail */
   *, *::before, *::after {
     cursor: none !important;
   }
 
   ::selection {
-    background: rgba(255, 46, 140, 0.5);
-    color: white;
+    background: rgba(255, 46, 140, 0.6);
+    color: #ffffff;
   }
 
-  /* Custom Glowing Scrollbar */
+  /* Cinematic Glowing Scrollbar */
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
   }
   ::-webkit-scrollbar-track {
-    background: #090412;
+    background: #06010d;
   }
   ::-webkit-scrollbar-thumb {
     background: linear-gradient(180deg, #ff2e8c, #ffd700);
     border-radius: 9999px;
-    box-shadow: 0 0 10px rgba(255, 46, 140, 0.8);
+    box-shadow: 0 0 12px rgba(255, 46, 140, 0.8);
   }
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   LUXURY UTILITY CLASSES & GLASSMORPHISM
+   CINEMATIC 3D UTILITY CLASSES & GLASSMORPHISM 3.0
    ═══════════════════════════════════════════════════════════════ */
+
+.font-cinzel {
+  font-family: var(--font-cinzel);
+}
 
 .font-serif-luxury {
   font-family: var(--font-serif-luxury);
@@ -98,11 +99,63 @@
   font-family: var(--font-display);
 }
 
+.font-outfit {
+  font-family: var(--font-outfit);
+}
+
 .font-mono-code {
   font-family: var(--font-mono-code);
 }
 
-/* Glassmorphism Card System */
+/* 3D Perspective Containers */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.perspective-2000 {
+  perspective: 2000px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+/* Glassmorphism 3.0 Cards */
+.glass-card-3d {
+  background: linear-gradient(135deg, rgba(22, 9, 44, 0.72) 0%, rgba(12, 4, 25, 0.85) 100%);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 215, 0, 0.22);
+  box-shadow: 
+    0 25px 60px rgba(0, 0, 0, 0.7),
+    0 0 35px rgba(255, 46, 140, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    inset 0 0 20px rgba(255, 215, 0, 0.05);
+}
+
+.glass-hud {
+  background: rgba(14, 5, 29, 0.82);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212, 175, 55, 0.2);
+}
+
+.glass-dock {
+  background: rgba(12, 4, 25, 0.88);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.8),
+    0 0 30px rgba(255, 46, 140, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
 .glass-card-luxury {
   background: rgba(18, 7, 36, 0.75);
   backdrop-filter: blur(24px);
@@ -147,16 +200,19 @@
   box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
 }
 
-/* Glow Texts */
+/* Cinematic Glow Texts */
 .glow-text-gold {
   text-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 46, 140, 0.4);
 }
 .glow-text-rose {
   text-shadow: 0 0 20px rgba(255, 46, 140, 0.7), 0 0 35px rgba(168, 85, 247, 0.4);
 }
+.glow-text-celestial {
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 215, 0, 0.7), 0 0 50px rgba(255, 46, 140, 0.5);
+}
 
 /* ═══════════════════════════════════════════════════════════════
-   ANIMATIONS
+   CINEMATIC VFX ANIMATIONS
    ═══════════════════════════════════════════════════════════════ */
 
 @keyframes gradientShift {
@@ -175,10 +231,35 @@
   50% { transform: rotateY(65deg); }
 }
 
+@keyframes laserShimmer {
+  0% { transform: translateX(-100%) rotate(45deg); opacity: 0; }
+  50% { opacity: 0.8; }
+  100% { transform: translateX(200%) rotate(45deg); opacity: 0; }
+}
+
+@keyframes audioEqualizer {
+  0%, 100% { height: 4px; }
+  50% { height: 16px; }
+}
+
 .animate-butterfly-wings {
   animation: butterflyWings 0.6s ease-in-out infinite;
 }
 
 .animate-pulse-glow {
   animation: pulseGlow 3s ease-in-out infinite;
+}
+
+.animate-laser-shimmer {
+  animation: laserShimmer 3.5s ease-in-out infinite;
+}
+
+.animate-audio-bar-1 {
+  animation: audioEqualizer 0.8s ease-in-out infinite alternate;
+}
+.animate-audio-bar-2 {
+  animation: audioEqualizer 0.6s ease-in-out infinite alternate 0.2s;
+}
+.animate-audio-bar-3 {
+  animation: audioEqualizer 0.9s ease-in-out infinite alternate 0.4s;
 }

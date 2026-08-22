@@ -229,6 +229,29 @@ class SoundEngine {
     this.playFlowerBloom();
   }
 
+  public playSparkle() {
+    if (this.isMuted) return;
+    this.initCtx();
+    if (!this.ctx) return;
+
+    const sparkleNotes = [1046.50, 1318.51, 1567.98, 2093.00];
+    sparkleNotes.forEach((freq, idx) => {
+      setTimeout(() => {
+        if (!this.ctx || this.isMuted) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+        gain.gain.setValueAtTime(0.05, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.4);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(this.ctx.currentTime + 0.4);
+      }, idx * 60);
+    });
+  }
+
   public playHeartPop() {
     if (this.isMuted) return;
     this.initCtx();

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Volume2, VolumeX, Sparkles, ChevronLeft, ChevronRight, Grid, X
+  Volume2, VolumeX, Sparkles, ChevronLeft, ChevronRight, Grid, X, Heart
 } from 'lucide-react';
 import { soundEngine } from '../utils/audio';
 
@@ -90,30 +90,33 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
 
   return (
     <>
-      {/* Top Header Bar with Smooth Hide/Reveal */}
+      {/* Top Holographic Glass HUD Header */}
       <motion.header
-        animate={{ y: isScrolledVisible ? 0 : -80 }}
+        animate={{ y: isScrolledVisible ? 0 : -85 }}
         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed top-0 left-0 right-0 z-40 px-3 py-2.5 sm:px-6 sm:py-3 flex items-center justify-between pointer-events-auto backdrop-blur-2xl bg-[#0f051d]/80 border-b border-[#f7e7ce]/20 shadow-[0_10px_30px_rgba(0,0,0,0.4)]"
+        className="fixed top-0 left-0 right-0 z-40 px-3 py-2 sm:px-6 sm:py-2.5 flex items-center justify-between pointer-events-auto backdrop-blur-2xl bg-[#090314]/85 border-b border-amber-400/25 shadow-[0_10px_35px_rgba(0,0,0,0.6)]"
       >
-        {/* Page Title & Counter Badge */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        {/* Page Title & Directory Trigger */}
+        <div className="flex items-center gap-2 sm:gap-3.5">
           <button
-            onClick={() => setIsMenuOpen(true)}
-            className="glass-pill px-3.5 py-1.5 text-xs font-mono text-[#f7e7ce] flex items-center gap-2 hover:bg-white/15 transition-all border border-[#f7e7ce]/30 active:scale-95 shadow-[0_4px_20px_rgba(212,175,55,0.2)]"
+            onClick={() => {
+              soundEngine.playClick();
+              setIsMenuOpen(true);
+            }}
+            className="glass-pill px-3.5 py-1.5 text-xs font-mono text-amber-200 flex items-center gap-2 hover:bg-white/15 transition-all border border-amber-400/35 active:scale-95 shadow-[0_0_15px_rgba(212,175,55,0.25)]"
             title="Open Directory Menu"
           >
-            <Grid className="w-3.5 h-3.5 text-[#d4af37]" />
-            <span className="font-bold text-[#f7e7ce] font-mono">
-              Page {currentPageIndex + 1}/{totalPages}
+            <Grid className="w-3.5 h-3.5 text-amber-400" />
+            <span className="font-bold text-amber-100 font-mono">
+              Ch. {currentPageIndex + 1}/{totalPages}
             </span>
           </button>
 
-          <div className="hidden md:flex items-center gap-2 text-xs text-rose-100/90">
+          <div className="hidden md:flex items-center gap-2.5 text-xs text-rose-100/90">
             <span className="text-lg">{currentPage.icon}</span>
             <span className="font-serif-luxury text-base font-semibold text-white tracking-wide">{currentPage.title}</span>
-            <span className="text-[#d4af37]/50">•</span>
-            <span className="text-pink-200/70 font-light">{currentPage.subtitle}</span>
+            <span className="text-amber-400/50">•</span>
+            <span className="text-pink-200/70 font-light font-outfit">{currentPage.subtitle}</span>
           </div>
         </div>
 
@@ -123,24 +126,24 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
           {onOpenRecoveryRoom && (
             <button
               onClick={() => {
-                soundEngine.playClick();
+                soundEngine.playHeartbeat();
                 onOpenRecoveryRoom();
               }}
-              className="glass-pill px-3 py-1.5 text-xs font-medium transition-all flex items-center gap-1.5 border border-rose-400/40 bg-rose-500/15 text-rose-200 hover:text-white hover:border-rose-400 shadow-[0_0_15px_rgba(244,63,94,0.25)] active:scale-95 animate-pulse"
+              className="glass-pill px-3 py-1.5 text-xs font-semibold transition-all flex items-center gap-1.5 border border-rose-400/50 bg-rose-500/20 text-rose-200 hover:text-white hover:border-rose-300 shadow-[0_0_15px_rgba(244,63,94,0.3)] active:scale-95 animate-pulse"
               title="Open Dhvani's Recovery Room"
             >
-              <span>❤️</span>
-              <span className="font-mono font-bold hidden sm:inline">Recovery Room</span>
+              <Heart className="w-3.5 h-3.5 text-rose-400 fill-rose-400" />
+              <span className="font-mono font-bold hidden sm:inline">Recovery Haven</span>
             </button>
           )}
 
           {/* Quick Quiz Jump Link */}
           <button
             onClick={() => handleJumpToPage(10)}
-            className={`glass-pill px-3 py-1.5 text-xs font-medium transition-all flex items-center gap-1.5 border active:scale-95 ${
+            className={`glass-pill px-3 py-1.5 text-xs font-semibold transition-all flex items-center gap-1.5 border active:scale-95 ${
               currentPageIndex === 10
-                ? 'bg-[#d4af37]/30 border-[#f7e7ce] text-white shadow-[0_0_20px_rgba(212,175,55,0.4)]'
-                : 'border-[#f7e7ce]/25 text-pink-200 hover:text-white hover:border-[#f7e7ce]/60'
+                ? 'bg-amber-400/30 border-amber-300 text-white shadow-[0_0_20px_rgba(212,175,55,0.4)]'
+                : 'border-amber-400/25 text-pink-200 hover:text-white hover:border-amber-300/60'
             }`}
             title="Jump to Interactive Quiz"
           >
@@ -150,11 +153,11 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
 
           {/* Standalone Gallery Link */}
           <button
-            onClick={() => handleJumpToPage(21)}
-            className={`glass-pill px-3 py-1.5 text-xs font-medium transition-all flex items-center gap-1.5 border active:scale-95 ${
-              currentPageIndex === 21
-                ? 'bg-[#d4af37]/30 border-[#f7e7ce] text-white shadow-[0_0_20px_rgba(212,175,55,0.4)]'
-                : 'border-[#f7e7ce]/25 text-pink-200 hover:text-white hover:border-[#f7e7ce]/60'
+            onClick={() => handleJumpToPage(22)}
+            className={`glass-pill px-3 py-1.5 text-xs font-semibold transition-all flex items-center gap-1.5 border active:scale-95 ${
+              currentPageIndex === 22
+                ? 'bg-amber-400/30 border-amber-300 text-white shadow-[0_0_20px_rgba(212,175,55,0.4)]'
+                : 'border-amber-400/25 text-pink-200 hover:text-white hover:border-amber-300/60'
             }`}
             title="Open Memory Museum Gallery"
           >
@@ -165,13 +168,13 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
           {/* Secret Hints */}
           <button
             onClick={() => {
-              soundEngine.playClick();
+              soundEngine.playSparkle();
               onOpenSecretHint();
             }}
-            className="glass-pill hover:bg-white/15 px-3 py-1.5 text-xs text-[#f7e7ce] font-medium transition-all flex items-center gap-1.5 border border-[#f7e7ce]/30 active:scale-95 shadow-[0_4px_20px_rgba(212,175,55,0.2)]"
+            className="glass-pill hover:bg-white/15 px-3 py-1.5 text-xs text-amber-200 font-semibold transition-all flex items-center gap-1.5 border border-amber-400/35 active:scale-95 shadow-[0_0_15px_rgba(212,175,55,0.25)]"
             title="Secret Hints"
           >
-            <Sparkles className="w-3.5 h-3.5 text-[#e5c158] animate-spin" style={{ animationDuration: '7s' }} />
+            <Sparkles className="w-3.5 h-3.5 text-amber-300 animate-spin" style={{ animationDuration: '7s' }} />
             <span className="hidden sm:inline font-mono">Secrets</span>
           </button>
 
@@ -181,21 +184,21 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
             className={`glass-pill p-2 transition-all border ${
               isMuted
                 ? 'border-white/10 text-slate-400 hover:text-slate-200'
-                : 'border-[#f7e7ce]/40 text-[#f7e7ce] hover:text-white shadow-[0_0_20px_rgba(247,231,206,0.3)]'
+                : 'border-amber-400/40 text-amber-300 hover:text-white shadow-[0_0_20px_rgba(247,231,206,0.35)]'
             } active:scale-95`}
             aria-label="Toggle Sound"
             title={isMuted ? 'Unmute Sound' : 'Mute Sound'}
           >
-            {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-[#e5c158]" />}
+            {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-amber-300" />}
           </button>
         </div>
       </motion.header>
 
-      {/* Floating Bottom Navigation Bar */}
+      {/* Floating Cinematic Bottom Chapter Bar */}
       <motion.nav
         animate={{ y: isScrolledVisible ? 0 : 90 }}
         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 glass-pill bg-[#0f051d]/90 border border-[#f7e7ce]/30 px-3 py-2 sm:px-5 sm:py-2.5 flex items-center gap-3 sm:gap-6 shadow-[0_15px_40px_rgba(0,0,0,0.6)] backdrop-blur-2xl"
+        className="fixed bottom-3.5 sm:bottom-4 left-1/2 -translate-x-1/2 z-40 glass-pill bg-[#0c041c]/90 border border-amber-400/35 px-3 py-1.5 sm:px-5 sm:py-2 flex items-center gap-2.5 sm:gap-5 shadow-[0_15px_40px_rgba(0,0,0,0.7)] backdrop-blur-2xl"
       >
         {/* Previous Page Button */}
         <button
@@ -203,25 +206,25 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
             if (currentPageIndex > 0) handleJumpToPage(currentPageIndex - 1);
           }}
           disabled={currentPageIndex === 0}
-          className={`flex items-center gap-1 sm:gap-2 px-3 py-1.5 rounded-full text-xs font-mono font-medium transition-all ${
+          className={`flex items-center gap-1 sm:gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium transition-all ${
             currentPageIndex === 0
-              ? 'opacity-40 cursor-not-allowed text-slate-500'
-              : 'hover:bg-white/15 text-[#f7e7ce] hover:text-white active:scale-95'
+              ? 'opacity-35 cursor-not-allowed text-slate-500'
+              : 'hover:bg-white/15 text-amber-200 hover:text-white active:scale-95'
           }`}
         >
           <ChevronLeft className="w-4 h-4" />
-          <span className="hidden sm:inline">Previous</span>
+          <span className="hidden sm:inline">Prev</span>
         </button>
 
         {/* Page Dots Indicator */}
-        <div className="flex items-center gap-1 sm:gap-1.5 max-w-[160px] sm:max-w-none overflow-x-auto py-1">
+        <div className="flex items-center gap-1 sm:gap-1.5 max-w-[150px] sm:max-w-none overflow-x-auto py-1">
           {PAGES_LIST.map((page, idx) => (
             <button
               key={page.id}
               onClick={() => handleJumpToPage(idx)}
               className={`transition-all duration-300 rounded-full flex-shrink-0 ${
                 currentPageIndex === idx
-                  ? 'w-5 sm:w-6 h-2 bg-gradient-to-r from-[#d4af37] to-[#fadadd] shadow-[0_0_12px_rgba(212,175,55,0.8)]'
+                  ? 'w-5 sm:w-6 h-2 bg-gradient-to-r from-amber-400 via-rose-400 to-pink-500 shadow-[0_0_12px_rgba(212,175,55,0.8)]'
                   : 'w-2 h-2 bg-pink-300/30 hover:bg-pink-300/60'
               }`}
               title={`${page.icon} Page ${page.id}: ${page.title}`}
@@ -235,13 +238,13 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
             if (currentPageIndex < totalPages - 1) handleJumpToPage(currentPageIndex + 1);
           }}
           disabled={currentPageIndex === totalPages - 1}
-          className={`flex items-center gap-1 sm:gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-medium transition-all ${
+          className={`flex items-center gap-1 sm:gap-2 px-3.5 py-1 rounded-full text-xs font-mono font-semibold transition-all ${
             currentPageIndex === totalPages - 1
-              ? 'opacity-40 cursor-not-allowed text-slate-500'
-              : 'bg-gradient-to-r from-[#d4af37] to-[#b76e79] hover:from-[#e5c158] hover:to-[#f4a0b5] text-white shadow-[0_0_20px_rgba(212,175,55,0.4)] active:scale-95'
+              ? 'opacity-35 cursor-not-allowed text-slate-500'
+              : 'bg-gradient-to-r from-amber-400 via-rose-400 to-pink-500 hover:opacity-95 text-slate-950 shadow-[0_0_20px_rgba(212,175,55,0.5)] active:scale-95'
           }`}
         >
-          <span className="font-semibold">Next</span>
+          <span>Next</span>
           <ChevronRight className="w-4 h-4" />
         </button>
       </motion.nav>
@@ -260,12 +263,12 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="glass-card-luxury bg-[#0f051d]/95 border-2 border-[#f7e7ce]/30 rounded-3xl p-6 max-w-xl w-full shadow-[0_0_90px_rgba(212,175,55,0.25)] space-y-4 max-h-[85vh] overflow-y-auto"
+              className="glass-card-3d bg-[#0d031c]/95 border-2 border-amber-400/35 rounded-3xl p-5 sm:p-6 max-w-xl w-full shadow-[0_0_90px_rgba(212,175,55,0.3)] space-y-4 max-h-[85vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-between border-b border-[#f7e7ce]/20 pb-3">
-                <div className="flex items-center gap-2 text-[#f7e7ce] font-serif-luxury text-lg font-semibold">
-                  <Grid className="w-4 h-4 text-[#d4af37]" />
+              <div className="flex items-center justify-between border-b border-amber-400/20 pb-3">
+                <div className="flex items-center gap-2 text-amber-200 font-serif-luxury text-lg font-semibold">
+                  <Grid className="w-4 h-4 text-amber-400" />
                   <span>RelationshipOS Interactive Directory</span>
                 </div>
                 <button
@@ -280,11 +283,11 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
               {onOpenRecoveryRoom && (
                 <button
                   onClick={() => {
-                    soundEngine.playClick();
+                    soundEngine.playHeartbeat();
                     setIsMenuOpen(false);
                     onOpenRecoveryRoom();
                   }}
-                  className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-gradient-to-r from-rose-500/25 via-amber-500/15 to-purple-500/20 border-2 border-rose-400/50 hover:border-rose-300 text-left transition-all shadow-[0_0_25px_rgba(244,63,94,0.25)] group"
+                  className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-gradient-to-r from-rose-500/25 via-amber-500/15 to-purple-500/20 border-2 border-rose-400/50 hover:border-rose-300 text-left transition-all shadow-[0_0_25px_rgba(244,63,94,0.3)] group"
                 >
                   <div className="flex items-center gap-3">
                     <span className="text-3xl group-hover:scale-110 transition-transform">❤️</span>
@@ -295,7 +298,7 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
                       <div className="text-sm font-semibold text-white font-serif-luxury">
                         Dhvani's Recovery Room
                       </div>
-                      <div className="text-[11px] text-rose-200/70 font-light">
+                      <div className="text-[11px] text-rose-200/70 font-light font-outfit">
                         Calm, peaceful comfort virtual room for fever rest
                       </div>
                     </div>
@@ -315,19 +318,19 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
                       onClick={() => handleJumpToPage(idx)}
                       className={`flex items-center gap-3 p-3 rounded-2xl border text-left transition-all ${
                         isActive
-                          ? 'bg-[#d4af37]/25 border-[#f7e7ce]/60 text-white shadow-[0_0_20px_rgba(212,175,55,0.3)]'
-                          : 'bg-white/5 border-pink-300/15 hover:border-[#f7e7ce]/40 text-slate-200 hover:bg-white/10'
+                          ? 'bg-amber-400/25 border-amber-300 text-white shadow-[0_0_20px_rgba(212,175,55,0.35)]'
+                          : 'bg-white/5 border-pink-300/15 hover:border-amber-400/40 text-slate-200 hover:bg-white/10'
                       }`}
                     >
                       <span className="text-2xl">{page.icon}</span>
                       <div>
-                        <div className="text-[10px] font-mono text-[#d4af37] font-bold">
-                          PAGE {page.id}
+                        <div className="text-[10px] font-mono text-amber-300 font-bold">
+                          CH. {page.id}
                         </div>
                         <div className="text-sm font-semibold text-white font-serif-luxury">
                           {page.title}
                         </div>
-                        <div className="text-[11px] text-pink-200/60 font-light truncate max-w-[140px]">
+                        <div className="text-[11px] text-pink-200/60 font-light font-outfit truncate max-w-[140px]">
                           {page.subtitle}
                         </div>
                       </div>
