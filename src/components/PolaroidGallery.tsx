@@ -16,6 +16,10 @@ interface PhotoItem {
 }
 
 const PHOTOS: PhotoItem[] = [
+  { id: 19, src: '/gallery/photo19.jpg', title: 'Gold Medalist & University Topper 🥇👑', caption: 'Holding her Gold Medal & Certificate of Excellence with highest distinction in B.Pharm at Nirma University. The most brilliant topper in the world! 💕', rotation: -2 },
+  { id: 20, src: '/gallery/photo20.jpg', title: 'Poetry in Handwriting ✍️✨', caption: 'Her handwriting is pure perfection — neat, elegant, and effortless. Even her study notes look like a work of romantic art. 📖💖', rotation: 3 },
+  { id: 21, src: '/gallery/photo21.jpg', title: 'Moonlit Elegance & Starlit Grace 🌙✨', caption: 'Standing beneath the open starlit sky in her elegant white dress. Ethereal beauty in its purest form. 💫🤍', rotation: -3 },
+  { id: 22, src: '/gallery/photo22.jpg', title: 'Pink Flower in Her Hair 🌸👓', caption: 'A fresh pink flower tucked softly behind her ear, adorable glasses, and that sweet enchanting smile. 💕', rotation: 2 },
   { id: 1, src: '/gallery/photo6.jpg', title: 'Our Very First Date ❤️', caption: 'Underneath the glowing fairy lights of the illuminated trees, where our story officially began.', rotation: -3 },
   { id: 2, src: '/gallery/photo7.jpg', title: 'First Date Magic ✨', caption: 'Our enchanted first date under the starlit tree canopy. Dressed up, smiling bright, and falling for you with every passing second.', rotation: 4 },
   { id: 3, src: '/gallery/photo1.jpg', title: 'Unfiltered Giggles 💕', caption: 'That laugh of yours is still my absolute favorite sound in the whole wide world.', rotation: -2 },
@@ -34,10 +38,6 @@ const PHOTOS: PhotoItem[] = [
   { id: 16, src: '/gallery/photo16.jpg', title: 'Starlit Evening Smiles ✨', caption: 'Under the open night sky, dressed in pink florals with your radiant smile and cute glasses shining brighter than the city lights.', rotation: 2 },
   { id: 17, src: '/gallery/photo17.jpg', title: 'Hands on Chin & Endless Charm 💖', caption: 'Resting your chin on your hands with that adorable smile. Looking at you, I fall in love all over again.', rotation: -4 },
   { id: 18, src: '/gallery/photo18.jpg', title: 'A Symphony of Colors & Love 🌈', caption: 'Standing beneath a canopy of vibrant streamers and twinkling lights. You are the bright color in my life every single day.', rotation: 3 },
-  { id: 19, src: '/gallery/photo19.jpg', title: 'Gold Medalist & University Topper 🥇👑', caption: 'Holding her Gold Medal & Certificate of Excellence with highest distinction in B.Pharm at Nirma University. The most brilliant topper in the world! 💕', rotation: -2 },
-  { id: 20, src: '/gallery/photo20.jpg', title: 'Poetry in Handwriting ✍️✨', caption: 'Her handwriting is pure perfection — neat, elegant, and effortless. Even her study notes look like a work of romantic art. 📖💖', rotation: 3 },
-  { id: 21, src: '/gallery/photo21.jpg', title: 'Moonlit Elegance & Starlit Grace 🌙✨', caption: 'Standing beneath the open starlit sky in her elegant white dress. Ethereal beauty in its purest form. 💫🤍', rotation: -3 },
-  { id: 22, src: '/gallery/photo22.jpg', title: 'Pink Flower in Her Hair 🌸👓', caption: 'A fresh pink flower tucked softly behind her ear, adorable glasses, and that sweet enchanting smile. 💕', rotation: 2 },
 ];
 
 export const PolaroidGallery: React.FC<PolaroidGalleryProps> = ({ onNext }) => {
